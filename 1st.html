@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIで最強プロフィールカードをつくれ！ — 1年生ソウタンDX講座</title>
+<style>
+  :root {
+    --bg: #f0f9ff;
+    --card: #ffffff;
+    --ink: #0f172a;
+    --sub: #475569;
+    --line: #e2e8f0;
+    --accent: #0e7490;       /* 1年生用のさわやかなシアンブルー */
+    --accent-soft: #ecfdf5;
+    --accent-hover: #0891b2;
+    --g1: #0e7490;
+    --ok: #10b981;
+    --ok-soft: #ecfdf5;
+    --ng: #ef4444;
+    --warning: #f59e0b;
+    --warning-soft: #fef3c7;
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  }
+
+  html { color-scheme: light; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.7;
+    padding-bottom: 5rem;
+  }
+
+  header {
+    background: linear-gradient(135deg, var(--accent) 0%, #0369a1 100%);
+    color: #fff; padding: 2rem 1.5rem 1.8rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  header h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: .05em; }
+  header p { font-size: .92rem; opacity: .9; margin-top: .4rem; }
+
+  /* AI 3つの約束 */
+  .rules-banner {
+    max-width: 760px; margin: 1rem auto 0;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px; padding: .6rem 1rem;
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    font-size: .8rem; font-weight: 700;
+  }
+  .rules-banner span { display: flex; align-items: center; gap: .3rem; }
+
+  nav {
+    position: sticky; top: 0; z-index: 10; display: flex;
+    background: var(--card); border-bottom: 2px solid var(--line);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+  }
+  nav button {
+    flex: 1 0 auto; min-width: 90px; padding: .9rem .5rem; border: none; background: none;
+    font-size: .9rem; font-weight: 700; color: var(--sub); cursor: pointer;
+    border-bottom: 3.5px solid transparent; font-family: inherit; white-space: nowrap;
+    transition: all 0.2s ease;
+  }
+  nav button:hover { color: var(--accent); }
+  nav button.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  main { max-width: 760px; margin: 0 auto; padding: 1.2rem; }
+  .pane { display: none; animation: fadeIn 0.3s ease; }
+  .pane.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .intro-card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 1.2rem 1.4rem; margin: .5rem 0 1.2rem; box-shadow: var(--shadow);
+  }
+  .intro-card h2 { font-size: 1.15rem; color: var(--accent); margin-bottom: .5rem; display: flex; align-items: center; gap: .4rem; }
+  .intro-card p { font-size: .9rem; color: var(--sub); }
+
+  .phase {
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    padding: 1.3rem 1.5rem; margin: 1rem 0; box-shadow: var(--shadow);
+    border-left: 5px solid var(--accent);
+  }
+  .phase-head { display: flex; align-items: baseline; gap: .7rem; flex-wrap: wrap; margin-bottom: .8rem; }
+  .time-badge {
+    background: var(--accent); color: #fff; border-radius: 999px;
+    font-size: .75rem; font-weight: 800; padding: .15rem .7rem; white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(14, 116, 144, 0.2);
+  }
+  .phase h3 { font-size: 1.1rem; color: var(--ink); font-weight: 700; }
+  .phase p, .phase li { font-size: .92rem; color: var(--ink); }
+  .phase ul, .phase ol { padding-left: 1.3rem; margin-top: .5rem; }
+  .phase li { margin-bottom: .3rem; }
+  .phase .note { color: var(--sub); font-size: .84rem; margin-top: .6rem; padding: .5rem; background: var(--bg); border-radius: 8px; border-left: 3px solid var(--line); }
+
+  /* 動画プレースホルダー */
+  .video-container {
+    margin: 0.8rem 0; width: 100%; aspect-ratio: 16 / 9;
+    background: linear-gradient(135deg, #e0f2fe 0%, #e0f2f1 100%);
+    border: 2px dashed #06b6d4; border-radius: 12px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  .video-container:hover {
+    border-color: var(--accent);
+    background: linear-gradient(135deg, #e0f2fe 0%, #ccfbf1 100%);
+  }
+  .video-icon {
+    font-size: 2.2rem; color: var(--accent); margin-bottom: .5rem;
+    width: 60px; height: 60px; background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--shadow); cursor: pointer; transition: transform 0.2s ease;
+  }
+  .video-icon:hover { transform: scale(1.1); }
+  .video-text { font-size: .9rem; font-weight: 700; color: #0891b2; }
+  .video-sub { font-size: .75rem; color: #06b6d4; margin-top: .2rem; }
+
+  /* タイマー行 */
+  .timer-row { margin-top: .8rem; display: flex; align-items: center; gap: .8rem; background: var(--bg); padding: .5rem .8rem; border-radius: 10px; width: fit-content; }
+  .timer-btn {
+    border: 1px solid var(--line); background: #fff; color: var(--sub);
+    border-radius: 8px; padding: .3rem .8rem; font-size: .8rem; font-weight: 700; cursor: pointer;
+    font-family: inherit; transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  }
+  .timer-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .timer-display { font-variant-numeric: tabular-nums; font-weight: 800; font-size: 1.1rem; color: var(--accent); }
+  .timer-display.warn { color: var(--ng); animation: blink 1s infinite alternate; }
+
+  @keyframes blink {
+    from { opacity: 1; } to { opacity: 0.5; }
+  }
+
+  /* プロンプトカード */
+  .prompt-card {
+    background: #ecfeff; border: 1px dashed var(--accent); border-radius: 12px;
+    padding: .9rem 1.1rem; margin: .8rem 0; font-size: .88rem; position: relative;
+    box-shadow: inset 0 2px 4px rgba(14, 116, 144, 0.02);
+  }
+  .prompt-card .prompt-title {
+    font-size: .75rem; font-weight: 800; color: var(--accent);
+    letter-spacing: .08em; text-transform: uppercase; margin-bottom: .4rem;
+  }
+  .prompt-card code {
+    display: block; font-family: Consolas, Monaco, "Courier New", Courier, monospace;
+    background: rgba(255, 255, 255, 0.7); padding: .6rem; border-radius: 6px;
+    border: 1px solid rgba(14, 116, 144, 0.1); margin-bottom: .6rem;
+    white-space: pre-wrap; word-break: break-all; color: #0891b2;
+  }
+  .copy-btn {
+    display: inline-flex; align-items: center; gap: .3rem; border: none; cursor: pointer;
+    background: var(--accent); color: #fff; border-radius: 8px;
+    padding: .4rem 1rem; font-size: .8rem; font-weight: 700; font-family: inherit;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(14, 116, 144, 0.3);
+  }
+  .copy-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+  /* 提出ボタン */
+  .form-btn {
+    display: flex; align-items: center; justify-content: center; gap: .5rem;
+    margin: 1rem 0; padding: .9rem;
+    background: var(--ok); color: #fff; border-radius: 12px; font-weight: 700;
+    text-decoration: none; font-size: .95rem; text-align: center;
+    box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2); transition: all 0.2s ease;
+  }
+  .form-btn:hover { background: #059669; transform: translateY(-1px); }
+
+  /* テーブル */
+  table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: .8rem 0; box-shadow: var(--shadow); border-radius: 8px; overflow: hidden; }
+  th, td { border: 1px solid var(--line); padding: .6rem .8rem; text-align: left; }
+  th { background: #e0f7fa; color: var(--accent); font-weight: 800; }
+  td { background: #fff; }
+
+  /* FAQ */
+  .faq-item {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 1rem 1.2rem; margin-bottom: .8rem; box-shadow: var(--shadow);
+  }
+  .faq-q { font-weight: 800; font-size: .95rem; color: var(--accent); display: flex; gap: .4rem; margin-bottom: .4rem; }
+  .faq-a { font-size: .9rem; color: var(--ink); border-left: 3px solid var(--line); padding-left: .8rem; }
+
+  footer { text-align: center; color: var(--sub); font-size: .75rem; margin-top: 3rem; padding: 1.5rem 1rem; border-top: 1px solid var(--line); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>AIで最強プロフィールカードをつくれ！</h1>
+  <p>50分 × 3時間｜言葉の力でアバターと『問い』を進化させるDXミッション</p>
+  <div class="rules-banner">
+    <span>🔒 ① 個人情報は絶対に入力しない</span>
+    <span>💡 ② AIの言うことを鵜呑みにせず、採否は自分で決める</span>
+    <span>📝 ③ AIとどんな対話をしたか、記録を残して成果物に書く</span>
+  </div>
+</header>
+
+<nav>
+  <button class="active" data-pane="pane1">1時間目<br><small>原案作成＆Canva生成</small></button>
+  <button data-pane="pane2">2時間目<br><small>動画視聴＆バトル第1戦</small></button>
+  <button data-pane="pane3">3時間目<br><small>リライト＆最終対戦・提出</small></button>
+  <button data-pane="panePrompts">道具箱<br><small>バトルルール集</small></button>
+  <button data-pane="paneFaq">FAQ<br><small>困ったとき</small></button>
+</nav>
+
+<main>
+
+  <!-- ================= 1時間目 ================= -->
+  <section id="pane1" class="pane active">
+    
+    <div class="intro-card">
+      <h2>🎯 1時間目のゴール</h2>
+      <p>「最強プロフィールカード」の原案を手書きで作成し、最強アバターを作るための<strong>【攻略ポイント（具体性・数値・理由・問い）】</strong>を確認します。その後、Canvaの画像生成を使ってアバター画像を生成します。</p>
+    </div>
+
+    <!-- フェーズ1：説明と手書き原案 -->
+    <div class="phase">
+      <div class="phase-head">
+        <span class="time-badge">0–25分</span>
+        <h3>① 概要説明 ＆ 最強プロフィールカードの原案作成</h3>
+      </div>
+      <p>先生の説明を聞いたあと、最強アバターカードをつくるための「攻略ポイント」を確認しながら、ワークシートにアバター名や好きなものの理由を手書きで記入します。</p>
+      
+      <p style="margin-top: .5rem; font-weight: 700; color: var(--accent);">★ 最強カードにするための「攻略ポイント」</p>
+      <table>
+        <tr><th>攻略ポイント</th><th>強くなるコツ</th></tr>
+        <tr><td><strong>具体性</strong></td><td>「〜が好き」だけでなく「〇〇の××という場面が好き」と詳しく書く。</td></tr>
+        <tr><td><strong>数値と理由</strong></td><td>頻度や強さなどの「具体的な数字」や「そう思う理由」を入れる。</td></tr>
+        <tr><td><strong>アバター説明</strong></td><td>アバターの見た目、性格、必殺技の仕組みを言葉で詳しく書く。</td></tr>
+        <tr><td><strong>問いの深さ</strong></td><td>「Why?（なぜ？）」で始まる、誰も答えを教えてくれない素朴な問いを書く。</td></tr>
+      </table>
+      <p class="note">⚠️ 注意：このバトルは人の強さを決めるものではありません。AIに伝わる言葉にすると出力がどう変わるか確かめる科学実験です。個人情報（本名・住所・友だちの名前）は絶対に入れないでください。</p>
+      
+      <div class="timer-row">
+        <button class="timer-btn" data-min="25">▶ 25分タイマー</button>
+        <span class="timer-display"></span>
+      </div>
+    </div>
+
+    <!-- フェーズ2：Canva画像生成 -->
+    <div class="phase">
+      <div class="phase-head">
+        <span class="time-badge">25–50分</span>
+        <h3>② Canva によるアバター画像生成</h3>
+      </div>
+      <p>Canvaを起動し、1時間目に手書きしたアバターの見た目説明をもとにして、Canvaの「文書から画像生成」でアバターの画像を生成します。</p>
+      
+      <!-- 動画埋め込みプレースホルダー -->
+      <div class="video-container">
+        <div class="video-icon">▶</div>
+        <p class="video-text">【1時間目の解説動画：ここに後で動画を埋め込みます】</p>
+        <span class="video-sub">（Canvaでの画像生成のコツやログイン手順）</span>
+      </div>
+
+      <p class="note">💡 思い通りの画像にならない場合は、プロンプトの言葉を足したり、順番を変えたり、タッチ（「3Dアート」「アニメ風」など）を指定してみましょう。1時間目内に完成しなくても2時間目以降に続けられます。</p>
+
+      <div class="timer-row">
+        <button class="timer-btn" data-min="25">▶ 25分タイマー</button>
+        <span class="timer-display"></span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ================= 2時間目 ================= -->
+  <section id="pane2" class="pane">
+
+    <div class="intro-card">
+      <h2>🎯 2時間目のゴール</h2>
+      <p>指定された教室へ移動し、新グループを編成します。班で1台の iPad を囲んで「レクチャー動画」を共同で視聴したあと、各自の iPad から Gemini を起動し、第1回アバターバトル対戦を実行します。</p>
+    </div>
+
+    <!-- フェーズ1：移動と班活動 -->
+    <div class="phase">
+      <div class="phase-head">
+        <span class="time-badge">0–10分</span>
+        <h3>① 移動・着席 ＆ 新グループ自己紹介</h3>
+      </div>
+      <p>2時間目のチャイムまでに、出席番号で割り振られた移動先の教室（1組〜5組の教室）へ速やかに移動し、指定された班の席に着席します。<br>着席後、班のメンバーにお互いのアバター名や画像を軽く紹介し、班のチーム名を決定します。</p>
+      <div class="timer-row">
+        <button class="timer-btn" data-min="10">▶ 10分タイマー</button>
+        <span class="timer-display"></span>
+      </div>
+    </div>
+
+    <!-- フェーズ2：グループ動画共同視聴 -->
+    <div class="phase">
+      <div class="phase-head">
+        <span class="time-badge">10–20分</span>
+        <h3>② レクチャー動画のグループ共同視聴</h3>
+      </div>
+      <p>班ごとに1台の iPad を囲み、講義動画を全員で一緒に視聴します（全員分の音が出るとうるさくなるため、イヤホンなしで1台だけ再生します）。動画を見ながら、AIを使うときの注意点やコツをワークシートにメモします。</p>
+
+      <!-- 動画埋め込みプレースホルダー -->
+      <div class="video-container">
+        <div class="video-icon">▶</div>
+        <p class="video-text">【2時間目の解説動画：ここに後で動画を埋め込みます】</p>
+        <span class="video-sub">（グループ共同視聴用：AI対話とバトルの説明）</span>
+      </div>
+
+      <div class="timer-row">
+        <button class="timer-btn" data-min="10">▶ 10分タイマー</button>
+        <span class="timer-display"></span>
+      </div>
+    </div>
+
+    <!-- フェーズ3：第1回アバターバトル -->
+    <div class="phase">
+      <div class="phase-head">
+        <span class="time-badge">20–50分</span>
+        <h3>③ Gemini による第1回アバターバトル実況</h3>
+      </div>
+      <p>各自の iPad で Gemini を起動し、まず<strong>「道具箱」タブにある「バトル実況ルール」</strong>をコピーして Gemini に送信し、バトルモードを起動します。<br>その後、自分のプロフィールテキストとアバター画像を送信し、対戦バトルを実行します。</p>
+      
+      <div class="prompt-card">
+        <div class="prompt-title">対話手順</div>
+        <p>1. <strong>「道具箱」タブのバトルルール</strong>をコピーしてGeminiに送る。<br>
+        2. Geminiが「バトルの準備ができました！」と返答したら、自分の<strong>プロフィールテキスト</strong>と<strong>アバター画像</strong>を送信する。<br>
+        3. 対戦相手（AIが用意する敵アバター）とのバトル実況を読み、勝敗結果や「AIの反応（どの言葉に反応したか、足りなかった情報は何か）」をメモする。</p>
+      </div>
+
+      <div class="timer-row">
+        <button class="timer-btn" data-min="30">▶ 30分タイマー</button>
+        <span class="timer-display"></span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ================= 3時間目 ================= -->
+  <section id="pane3" class="pane">
+
+    <div class="intro-card">
+      <h2>🎯 3時間目のゴール</h2>
+      <p>第1回バトルの結果（AIの反応）をもとにして、言葉を具体的・数値的に「リライト（超進化）」します。再対戦をしたあと、最終プロフィールをGeminiで丸ごとカード画像化し、ロイロノートに提出して振り返りを行います。</p>
+    </div>
+
+    <!-- フェーズ1：リライト＆第2回戦 -->
+    <div class="phase">
+      <div class="phase-head">
+        <span class="time-badge">0–15分</span>
+        <h3>① 言葉のリライト（超進化） ＆ 第2回バトル</h3>
+      </div>
+      <p>第1回バトルの実況で、AIから「何が足りない」と指摘されたかを確認します。抽象的だった言葉を具体的・論理的に書き直し、最強アバターカードへと「超進化（リライト）」させます。</p>
+      <ul>
+        <li><strong>リライトのヒント</strong>: 必殺技が発動する具体的な仕組みや、その技を裏付ける「好きな食べ物の科学的な理由」、問い（Why）の背景などをより深く言葉にします。</li>
+      </ul>
+      <p style="margin-top: .5rem;">リライトした最強プロフィールを再度 Gemini に送信し、第2回バトルを実行。ステータスや必殺技の変化、実況の熱狂度を比較します。</p>
+      <div class="timer-row">
+        <button class="timer-btn" data-min="15">▶ 15分タイマー</button>
+        <span class="timer-display"></span>
+      </div>
+    </div>
+
+    <!-- フェーズ2：カードの画像化と提出 -->
+    <div class="phase">
+      <div class="phase-head">
+        <span class="time-badge">15–50分</span>
+        <h3>② カードの丸ごと画像化 ＆ 提出・振り返り</h3>
+      </div>
+      <p>最終プロフィールと画像をGeminiに読み込ませ、カードイラストとして丸ごと生成します（コピペ用プロンプトは道具箱タブにあります）。</p>
+
+      <!-- 動画埋め込みプレースホルダー -->
+      <div class="video-container">
+        <div class="video-icon">▶</div>
+        <p class="video-text">【3時間目の解説動画：ここに後で動画を埋め込みます】</p>
+        <span class="video-sub">（カードの丸ごと画像化のプロンプトと保存・提出手順）</span>
+      </div>
+
+      <p style="margin-top: .8rem;">生成されたアバターカード画像を <strong>ロイロノート</strong> に提出し、ワークシートの「振り返りの5つの問い」に記述をして本日のミッションは完了です！</p>
+      
+      <div class="timer-row">
+        <button class="timer-btn" data-min="35">▶ 35分タイマー</button>
+        <span class="timer-display"></span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ================= 道具箱 ================= -->
+  <section id="panePrompts" class="pane">
+    <div class="intro-card">
+      <h2>🛠️ 道具箱（バトルルール ＆ カード生成）</h2>
+      <p>Geminiに送信するバトル実況ルールと、最終カード画像化用の指示文です。ボタンを押してコピーし、Geminiのチャット欄に貼り付けて使用してください。</p>
+    </div>
+
+    <div class="phase">
+      <h3>1. 【重要】バトル実況ルール（2時間目・3時間目開始時に送信）</h3>
+      <p style="font-size: .85rem; color: var(--sub); margin-bottom: .5rem;">※このルールを最初に送って、Geminiにバトルシステムを読み込ませてください。</p>
+      <div class="prompt-card">
+        <div class="prompt-title">コピー用プロンプト（バトル実況ルール）</div>
+        <code>あなたは『世界一熱狂的なバトル実況アナウンサー』です。これから自己紹介アバターカード（プロフィールテキストと画像）が入力されます。以下のルールで戦闘ステータスを算出・解説し、相手モンスターを自動生成して4フェーズで熱狂的なバトルを実況し、勝敗を判定してください。
+
+【ステータスルール（攻略ポイント）】
+・自己紹介（好きなもの、性格、アバター特徴）が具体的で、数値や明確な理由があるほど攻撃力（ATK）が高くなります。
+・『問い（Why?）』の記述が具体的で深い（素朴かつ深い疑問）ほど、HPと防御力（DEF）が高くなります。
+・記述が15語未満の場合は「Limit Breakロック」がかかり、能力上限が極端に制限されます。50語以上の豊かな表現である場合、最大奥義（超進化スキル）を繰り出します。
+
+まずは「最強アバターカードの戦闘準備が完了しました！プロフィールテキストと画像を送信してください」とだけ返答してください。</code>
+        <button class="copy-btn">📋 コピーする</button>
+      </div>
+    </div>
+
+    <div class="phase">
+      <h3>2. 最終カードの画像化プロンプト（3時間目の最後に送信）</h3>
+      <p style="font-size: .85rem; color: var(--sub); margin-bottom: .5rem;">※最終決定したプロフィールとアバター画像を入力した後、この指示を送ってカード化させます。</p>
+      <div class="prompt-card">
+        <div class="prompt-title">コピー用プロンプト（最強カード画像化）</div>
+        <code>これまで決定した最強プロフィールテキストとアバター画像を元にして、遊戯王やポケモンカードのような、美麗な外枠や戦闘ステータス（攻撃力、HP、防御力、必殺技名）がSFチックにデザイン・配置された『最強アバターカード』のイラスト画像を丸ごと生成してください。日本語のテキスト部分もカード内にグラフィカルに描き込んでください。</code>
+        <button class="copy-btn">📋 コピーする</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section id="paneFaq" class="pane">
+    <div class="intro-card">
+      <h2>❓ 困ったとき（FAQ）</h2>
+      <p>1年生ソウタンDX講座中に「思い通りに動かない」「困った」となった場合の対応集です。</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Q1. Canvaで思い通りのイラストが生成されません。</div>
+      <div class="faq-a">A1. CanvaのAIは短い言葉よりも、具体的で詳しい言葉の方が理解しやすくなります。「タッチ」を指定するキーワード（例:「3D粘土細工風」「ネオン輝くサイバーパンク風」「かわいいちいかわ風イラスト」など）をプロンプトの最後に追加してみてください。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Q2. Geminiが対戦実況を行わず、普通の会話をしてしまいます。</div>
+      <div class="faq-a">A2. Geminiがバトルのルールを忘れてしまった可能性があります。新しいチャット（トピック）を開き、「道具箱」タブにある【1. バトル実況ルール】をもう一度コピーして送信してから、アバターカードの情報を送ってください。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Q3. 3時間目の「カード画像化」で、日本語の文字や枠がぐちゃぐちゃになります。</div>
+      <div class="faq-a">A3. 画像生成AIは文字を描くのが少し苦手です。もし文字が潰れてしまっても、アバターの枠やイラストが格好よくデザインされていれば問題ありません。どうしても綺麗にしたい場合は、「カードの外枠とイラスト部分だけを描き込んで、文字は書かないで」と指示して、外枠付きカード画像として生成させることも有効です。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Q4. バトルで負けてしまったら不合格ですか？</div>
+      <div class="faq-a">A4. いいえ！このバトルは勝敗を競うものではなく、「言葉を具体的に書き換えたことで、AIの出力やバトルの実況内容がどうパワーアップしたか（表現の進化）」を実感するための実験です。負けてしまっても、何が足りなかったかを分析してリライトに活かせれば大成功です。</div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  AIで最強プロフィールカードをつくれ！ — 1年生ソウタンDX講座 ｜ 考えるのは人間、広げるのはAI<br>
+  &copy; 2026 School Agent INC. All rights reserved.
+</footer>
+
+<script>
+  // タブ切り替えロジック
+  document.querySelectorAll('nav button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
+      
+      btn.classList.add('active');
+      const paneId = btn.dataset.pane;
+      document.getElementById(paneId).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  // 並列防止型・工程タイマー
+  let activeTimer = null;
+  document.querySelectorAll('.timer-btn').forEach(btn => {
+    const display = btn.parentElement.querySelector('.timer-display');
+    btn.addEventListener('click', () => {
+      // 既存のタイマーがあれば停止して表示をクリア
+      if (activeTimer) { 
+        clearInterval(activeTimer.id); 
+        activeTimer.display.textContent = ''; 
+      }
+      
+      let remainSeconds = Math.round(parseFloat(btn.dataset.min) * 60);
+      
+      const tick = () => {
+        const minutes = Math.floor(remainSeconds / 60);
+        const seconds = remainSeconds % 60;
+        display.textContent = `${minutes}:${String(seconds).padStart(2, '0')}`;
+        
+        // 残り1分（60秒）以下で警告色に変更
+        display.classList.toggle('warn', remainSeconds <= 60);
+        
+        if (remainSeconds <= 0) {
+          clearInterval(timerId);
+          display.textContent = '⏰ 終了！';
+        }
+        remainSeconds--;
+      };
+      
+      tick();
+      const timerId = setInterval(tick, 1000);
+      activeTimer = { id: timerId, display: display };
+    });
+  });
+
+  // プロンプトのクリップボードコピー
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const codeBlock = btn.parentElement.querySelector('code');
+      if (codeBlock) {
+        const text = codeBlock.textContent.trim();
+        navigator.clipboard.writeText(text).then(() => {
+          const originalText = btn.innerHTML;
+          btn.innerHTML = '✓ コピーしました！';
+          btn.style.background = 'var(--ok)';
+          btn.style.boxShadow = '0 2px 4px rgba(16, 185, 129, 0.3)';
+          
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.style.background = 'var(--accent)';
+            btn.style.boxShadow = '0 2px 4px rgba(14, 116, 144, 0.3)';
+          }, 2000);
+        }).catch(err => {
+          console.error('コピーに失敗しました: ', err);
+        });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
