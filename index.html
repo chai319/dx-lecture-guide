@@ -187,6 +187,43 @@
   .faq-q { font-weight: 800; font-size: .95rem; color: var(--accent); display: flex; gap: .4rem; margin-bottom: .4rem; }
   .faq-a { font-size: .9rem; color: var(--ink); border-left: 3px solid var(--line); padding-left: .8rem; }
 
+  /* アコーディオン（スキャフォールド用） */
+  details.scaffold-guide {
+    background: var(--accent-soft); border: 1.5px solid var(--accent);
+    border-radius: 12px; padding: 0.2rem 1.1rem; margin: 1rem 0;
+    box-shadow: var(--shadow);
+  }
+  details.scaffold-guide summary {
+    cursor: pointer; font-weight: 800; color: var(--accent);
+    padding: 0.8rem 0; font-size: 0.95rem; outline: none;
+    user-select: none;
+  }
+  details.scaffold-guide[open] {
+    padding-bottom: 0.8rem;
+  }
+  .scaffold-body {
+    font-size: 0.88rem; color: var(--ink); line-height: 1.6;
+  }
+  .scaffold-body p { margin-bottom: 0.6rem; }
+  .scaffold-body table { margin-top: 0.5rem; font-size: 0.82rem; }
+  .scaffold-body td strong { color: var(--accent); }
+
+  /* 3つの関門カード（3ゲート） */
+  .gate-container {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 0.8rem; margin: 1rem 0;
+  }
+  .gate-card {
+    background: var(--card); border: 1.5px solid var(--line); border-top: 5px solid var(--accent);
+    border-radius: 12px; padding: 1.1rem 1rem; box-shadow: var(--shadow);
+  }
+  .gate-card h4 {
+    font-size: 0.92rem; font-weight: 800; color: var(--accent); margin-bottom: 0.4rem;
+  }
+  .gate-card p {
+    font-size: 0.82rem; color: var(--sub); line-height: 1.5;
+  }
+
   footer { text-align: center; color: var(--sub); font-size: .75rem; margin-top: 3rem; padding: 1.5rem 1rem; border-top: 1px solid var(--line); }
 </style>
 </head>
@@ -234,23 +271,65 @@
         <span class="video-sub">（5分程度の解説動画を班で共同視聴）</span>
       </div>
 
+      <!-- 問いのBefore/After対比（SSコンテンツ） -->
+      <div style="margin-top: 1.2rem;">
+        <h4 style="font-size: 0.95rem; font-weight: 800; color: var(--accent); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.3rem;">💡 導入：問いは「見つける」より「磨く」</h4>
+        <p style="font-size: 0.85rem; color: var(--sub); margin-bottom: 0.5rem;">粗い問いが、これからのワークでどう具体的に化けるか、実例でイメージを掴もう！</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Before（粗い問い）</th>
+              <th>After（磨かれた問い）</th>
+              <th>なぜAfterが良いの？（ポイント）</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>登りやすい階段って？</td>
+              <td>本校 of 階段で、<strong>蹴上×踏面を変えると</strong>登坂時の<strong>心拍増加はどう変わるか</strong></td>
+              <td>「登りやすさ」というふわっとした言葉を、<strong>「心拍数」という数値で測れるもの</strong>に変えたから！</td>
+            </tr>
+            <tr>
+              <td>化粧品って酸化を防げるの？</td>
+              <td>化粧水中の<strong>ビタミンC濃度を変えると</strong>、リンゴ切片の<strong>褐変（明度変化）をどれだけ遅らせるか</strong></td>
+              <td>「防げるの？」という疑問を、実際にリンゴを使って<strong>比べられる実験</strong>にしたから！</td>
+            </tr>
+            <tr>
+              <td>フォントで印象が変わる？</td>
+              <td>フォントの<strong>太さ（細/中/太）を変えると</strong>、広告文の<strong>"信頼感"評点をどう変えるか</strong></td>
+              <td>印象という曖昧なものを、アンケートで**点数化（数値化）して比べられる**ようにしたから！</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       <div class="timer-row">
         <button class="timer-btn" data-min="10">▶ 10分タイマー</button>
         <span class="timer-display"></span>
       </div>
     </div>
 
-    <!-- フェーズ2：写真撮影とアップロード -->
-    <div class="phase">
-      <div class="phase-head">
-        <span class="time-badge">10–20分</span>
-        <h3>② 問いの撮影 ＆ Geminiへのアップロード</h3>
+      <!-- 送信前のセルフチェック：3つの関門（SSコンテンツ） -->
+      <div style="margin-top: 1.2rem; border-top: 1.5px dashed var(--line); padding-top: 1.2rem;">
+        <h4 style="font-size: 0.95rem; font-weight: 800; color: var(--accent); margin-bottom: 0.5rem;">🔍 撮影・送信前の「３つの関門（セルフチェック）」</h4>
+        <p style="font-size: 0.85rem; color: var(--sub); margin-bottom: 0.8rem;">iPadで撮影して Gemini に送信する前に、自分たちの問いがこの３つのゲートを通過できるかチェックしよう！</p>
+        <div class="gate-container">
+          <div class="gate-card">
+            <h4>① だれにでも伝わる？ (clear)</h4>
+            <p>探究のことを何も知らないクラスの友達に問いを言ったとき、<strong>「それって、つまり〇〇を調べるんだね！」</strong>とすぐに言い直してもらえるか？</p>
+          </div>
+          <div class="gate-card">
+            <h4>② 学校で本当にできる？ (focused)</h4>
+            <p>夏休みの短い時間（数日〜１週間）や、学校の理科室にある道具、各自の iPad だけで、<strong>本当に最後まで実験やアンケートをやり切れるか？</strong></p>
+          </div>
+          <div class="gate-card">
+            <h4>③ コピペで終わらない？ (arguable)</h4>
+            <p>ネットで検索して終わりではなく、自分たちのデータをもとに<strong>「だから私たちは〇〇だと思う！」という独自の意見（主張）</strong>が言えるか？</p>
+          </div>
+        </div>
+        <p style="font-size: 0.78rem; color: var(--sub); margin-top: 0.4rem; font-style: italic;">※ 国際バカロレア（IB）の卒業論文審査基準をもとにした、本物の物差しです。弱い部分があれば、班で少し言葉を直してから撮影しましょう。</p>
       </div>
-      <p>各自、これまで紙のワークシートに手書きで書いていたリサーチクエスチョン（問い）を、iPadのカメラで『写真撮影』してGeminiに添付します。</p>
-      <ul>
-        <li><strong>綺麗に撮影するコツ</strong>: 影が入らないよう、紙を机の上から少し浮かせて撮ると綺麗に写ります。</li>
-        <li><strong>不同意生徒の配慮</strong>: 生成AI利用不同意の生徒は、チームメンバーの撮影や添付作業に交ざって、一緒に問いのテキストを調整します。</li>
-      </ul>
+
       <div class="timer-row">
         <button class="timer-btn" data-min="10">▶ 10分タイマー</button>
         <span class="timer-display"></span>
@@ -356,6 +435,40 @@
         <button class="copy-btn">📋 コピーする</button>
       </div>
 
+      <!-- 計画の変数化スキャフォールド（アコーディオン） -->
+      <details class="scaffold-guide">
+        <summary>🔍 計画を具体化するための「変数化チェック表」</summary>
+        <div class="scaffold-body">
+          <p>計画書を完成させて Classroom に提出する前に、以下の3つの条件（🔴🔵🟡）がはっきり書かれているか確認しよう！</p>
+          <table>
+            <thead>
+              <tr>
+                <th>仕分け</th>
+                <th>やさしく言うと</th>
+                <th>チェックポイント</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>🔴 変える条件</strong><br>(説明変数)</td>
+                <td>自分たちがわざと変える条件</td>
+                <td>太さと色など、同時に2つ以上変えてしまっていないか？（変えるのは1つだけに！）</td>
+              </tr>
+              <tr>
+                <td><strong>🔵 測る条件</strong><br>(目的変数)</td>
+                <td>結果として測定・記録するもの</td>
+                <td>「登りやすさ」のように主観のままになっていないか？（心拍数や秒数、点数などの<strong>数字で測れるもの</strong>に変えよう！）</td>
+              </tr>
+              <tr>
+                <td><strong>🟡 揃える条件</strong><br>(統制変数)</td>
+                <td>結果を狂わせないために、同じにする条件</td>
+                <td>気温、測定する時間帯、実験する場所など、揃えるべき条件をすべて書き出して計画に入れたか？</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+
       <p style="margin-top: .8rem;">AIと対話して「これなら本当に夏休みに自分たちで測定できる！」と思える具体的な計画書ドキュメントを完成させ、<strong>Google Classroom へ提出</strong>して終了です。</p>
 
       <div class="timer-row">
@@ -406,6 +519,42 @@
         <code>この実験計画で「想定される失敗パターン」や「結果が狂ってしまう原因（揃えるべき条件の見落とし）」を3つ教えてください。また、その対策も提案してください。</code>
         <button class="copy-btn">📋 コピーする</button>
       </div>
+    </div>
+
+    <!-- やさしい用語ミニ辞典（アコーディオン） -->
+    <div style="margin-top: 1.2rem;">
+      <details class="scaffold-guide">
+        <summary>📘 AIとの対話がスムーズになる「やさしい用語ミニ辞典」</summary>
+        <div class="scaffold-body">
+          <p>AI（GeminiやNotebookLM）と会話しているときに出てくる難しい専門用語を、やさしい言葉に言い換えました。困ったときに開いてみてください。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>難しい言葉</th>
+                <th>やさしい言い換え（意味）</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>仮説 (Hypothesis)</strong></td>
+                <td>「実験したら、たぶんこうなるはずだ」という科学的な予想。</td>
+              </tr>
+              <tr>
+                <td><strong>操作的定義 (Operational Definition)</strong></td>
+                <td>「登りやすさ」や「集中力」など、ふわっとした言葉を「心拍数」や「作業時間」などの<strong>具体的な数字で測るためのルール</strong>のこと。</td>
+              </tr>
+              <tr>
+                <td><strong>交絡 (Confounding)</strong></td>
+                <td>結果を狂わせる「怪しい犯人」が同時に2つ以上いて、どっちのせいで結果が変わったのか区別できない状態。（例：フォントの太さと同時に文字の色まで変えてしまうと、どっちの影響か分からなくなる）</td>
+              </tr>
+              <tr>
+                <td><strong>対照実験 (Control Experiment)</strong></td>
+                <td>効果を確かめるために、あえて「何も条件を変えていない基本グループ」を用意して比べること。（例：冷やしたお茶の効果を測るために、常温のお茶のデータも取る）</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
     </div>
   </section>
 
