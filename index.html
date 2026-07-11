@@ -291,7 +291,7 @@
 
     <div class="intro-card">
       <h2>🎯 2時間目のゴール</h2>
-      <p>1時間目にGemini Deep ResearchからGoogleドキュメントに出力した先行研究を <strong>NotebookLM</strong> に読み込ませ、「先行研究と自分たちの問いのズレ（ギャップ）」を分析。さらに <strong>Geminiによる批判的ラダー（反論壁打ち）</strong> を経て、夏休みに確実に実行できる具体的な計画に仕上げます。</p>
+      <p>1時間目にGeminiからエクスポートしたGoogleドキュメントを <strong>NotebookLM</strong> に読み込ませ、「先行研究と自分たちの問いのズレ（ギャップ）」を分析。さらに <strong>Geminiによる批判的ラダー（反論壁打ち）</strong> を経て、夏休みに確実に実行できる具体的な計画に仕上げてワークシートを完成させます。</p>
     </div>
 
     <!-- ステップ1：動画視聴 -->
@@ -319,9 +319,9 @@
     <div class="phase">
       <div class="phase-head">
         <span class="time-badge">5–20分</span>
-        <h3>② NotebookLM へのソース追加 ＆ ギャップ分析</h3>
+        <h3>② NotebookLM へのソース追加 ＆ ギャップ分析 <span style="background: #e11d48; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-left: 6px;">ワークシート 2 に記入</span></h3>
       </div>
-      <p>1時間目にGemini Deep Researchから<strong>『Google ドキュメントに出力』して保存したドキュメント</strong>を、NotebookLMのソースとして新規追加します。追加後、対話機能を使って「自分たちの問いがどこまで明らかになっていて、どこがまだ分かっていないか（ズレ・ギャップ）」を抽出します。</p>
+      <p>1時間目にGemini Deep Researchから<strong>『Google ドキュメントに出力』して保存したドキュメント</strong>を、NotebookLMのソースとして追加します。追加後、対話機能を使って「自分たちの問いがどこまで明らかになっていて、どこがまだ分かっていないか（ズレ・ギャップ）」を抽出します。</p>
       
       <div class="prompt-card">
         <div class="prompt-title">NotebookLM用壁打ちプロンプト</div>
@@ -334,7 +334,7 @@
         NotebookLMは外部URLの先まで直接読みに行くことができません。必ずGeminiから出力したGoogleドキュメントのテキストそのものをソースに追加してください。
       </p>
 
-      <p style="margin-top: .8rem;">対話によって見つかった「まだ明らかになっていないギャップ」や「やるべきこと」は、NotebookLMの<strong>『メモ機能』を使って「計画のヒント」として保存</strong>しておきます。</p>
+      <p style="margin-top: .8rem;">対話によって見つかった「まだ明らかになっていないギャップ」や「やるべきこと」は、NotebookLMのメモ機能を使って保存した上で、<strong>ワークシートの「2. NotebookLMによる『ズレ（ギャップ）』の特定」欄に記入</strong>します。</p>
 
       <div class="timer-row">
         <button class="timer-btn" data-min="15">▶ 15分タイマー</button>
@@ -342,50 +342,25 @@
       </div>
     </div>
 
-    <!-- ステップ3：Gemini批判的ラダー (新規追加) -->
+    <!-- ステップ3：Gemini批判的ラダー -->
     <div class="phase" style="border-left-color: #b45309; background: #fffcf9;">
       <div class="phase-head">
-        <span class="time-badge" style="background: #b45309;">20–35分</span>
-        <h3 style="color: #b45309;">🔥 ③ Geminiによる批判的ラダー（反論壁打ち）</h3>
+        <span class="time-badge" style="background: #b45309;">20–30分</span>
+        <h3 style="color: #b45309;">③ Geminiによる批判的ラダー（反論壁打ち） <span style="background: #e11d48; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-left: 6px;">ワークシート 3 に記入</span></h3>
       </div>
-      <p>抽出したギャップをもとに立てた「新しい問い」と「実験設定」をGeminiに見せ、計画の弱点や交絡要因を徹底的に批判させます（大元の参考サイト：問いの精錬所仕様）。</p>
+      <p>抽出したギャップをもとに立てた「新しい問い」と「実験設定」をGeminiに入力し、計画の弱点や交絡要因を徹底的に指摘させます（大元の参考サイト：問いの精錬所仕様）。</p>
       
       <div class="prompt-card" style="border-color: #b45309; background: #ffffff;">
         <div class="prompt-title" style="background: #b45309; color: white;">💬 批判的ラダー用プロンプト（反論壁打ち）</div>
-        <code id="prompt-ladder" style="color: #4b5563; display: block; white-space: pre-wrap; font-family: monospace;">私たちの問いと実験計画です：[内容を貼り付け]
+        <code id="prompt-ladder" style="color: #4b5563; display: block; white-space: pre-wrap; font-family: monospace;">私たちの問いと実験計画です：[自分たちの内容を貼り付け]
 1. この計画の弱点や突っ込みどころを5つ、コンテストの審査員のように厳しく指摘してください。
 2. この方法では問いに正しく答えたことにならないケースや、結果を別視点で説明できてしまう要因（交絡要因）を挙げてください。</code>
         <button class="copy-btn" style="background: #b45309; color: white;" onclick="navigator.clipboard.writeText(document.getElementById('prompt-ladder').innerText); alert('コピーしました！')">📋 コピーする</button>
       </div>
 
       <div class="note" style="border-left-color: #b45309; background: #fef3e2;">
-        <strong>ワークシート記入:</strong> 指摘された「一番痛いツッコミ（突っ込みどころ）」をメモし、それを防ぐために実験設定（揃える条件など）をどう修正したかをワークシートの該当箇所に記録してください。
+        <strong>ワークシート記入:</strong> 指摘された「一番痛いツッコミ（突っ込みどころ）」と、それを防ぐために実験設定（揃えるべき条件など）をどう修正したかを、<strong>ワークシートの「3. Geminiによる批判的ラダー」欄に記入</strong>します。
       </div>
-
-      <div class="timer-row">
-        <button class="timer-btn" data-min="15">▶ 15分タイマー</button>
-        <span class="timer-display"></span>
-      </div>
-    </div>
-
-    <!-- ステップ4：Gemini Notebooksでロードマップ作成 -->
-    <div class="phase">
-      <div class="phase-head">
-        <span class="time-badge">35–45分</span>
-        <h3>④ Gemini Notebooks 連携 ＆ 計画具体化</h3>
-      </div>
-      <p>Geminiを再度開き、入力欄左側の＋ボタン（添付メニュー）から <strong>Notebooks</strong> を選択して、先ほどNotebookLMで作成したメモ（ギャップや課題）を読み込ませ、夏休みの具体的なスケジュール・手順を具体化させます。</p>
-      
-      <div class="prompt-card">
-        <div class="prompt-title">Gemini (Notebooks連携用) 計画具体化プロンプト</div>
-        <code id="prompt-notebooks">添付されたNotebooksのメモ（ギャップや課題）に基づいて、私たちが「夏休みに実行するべき具体的な実験手順、測定回数、必要な材料、週間スケジュール」をロードマップの形で提案してください。</code>
-        <button class="copy-btn">📋 コピーする</button>
-      </div>
-
-      <p class="note">
-        💡 <strong>測定方法の具体化</strong><br>
-        「登りやすさ」や「効果」など、曖昧な言葉を「心拍数」や「作業時間」などの「数値で測定できる定量指標」に変換しましょう。
-      </p>
 
       <div class="timer-row">
         <button class="timer-btn" data-min="10">▶ 10分タイマー</button>
@@ -393,15 +368,77 @@
       </div>
     </div>
 
-    <!-- ステップ5：クロージング (新規追加) -->
+    <!-- ステップ4：最終アップデート計画（新しい問いの決定） -->
+    <div class="phase">
+      <div class="phase-head">
+        <span class="time-badge">30–38分</span>
+        <h3>④ 最終アップデート計画の決定 <span style="background: #e11d48; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-left: 6px;">ワークシート 4 に記入</span></h3>
+      </div>
+      <p>Geminiの反論を乗り越え、自分たちが夏休みに取り組む「新しいリサーチクエスチョン（問い）」を最終決定します。</p>
+      <ul>
+        <li><strong>問いの条件：</strong> 「対象 ＋ 変える条件 ＋ 測るもの」が1文で明確になっており、ネットで検索してもすぐには答えが出ない問いになっているか確認します。</li>
+        <li>決定した問いを、<strong>ワークシートの「4. 最終アップデート計画」の1行目に記入</strong>します。</li>
+      </ul>
+      <div class="timer-row">
+        <button class="timer-btn" data-min="8">▶ 8分タイマー</button>
+        <span class="timer-display"></span>
+      </div>
+    </div>
+
+    <!-- ステップ5：元の調査・実験計画を更新する (SSに対応するステップ) -->
+    <div class="phase" style="border-left-color: #2563eb; background: #f0f6ff;">
+      <div class="phase-head">
+        <span class="time-badge" style="background: #2563eb;">38–45分</span>
+        <h3 style="color: #2563eb;">⑤ 調査・実験計画の更新と確定 <span style="background: #e11d48; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-left: 6px;">ワークシート 5 に記入</span></h3>
+      </div>
+      <p>Geminiで <strong>Notebooks</strong> を添付したチャットを開き、具体的な実験計画（定量データ・定性データ）を具体化させます。</p>
+      
+      <div class="prompt-card">
+        <div class="prompt-title">Gemini (Notebooks連携用) 計画具体化プロンプト</div>
+        <code id="prompt-notebooks">添付されたNotebooksのメモ（ギャップや課題）に基づいて、私たちが「夏休みに実行するべき具体的な実験手順、測定回数、必要な材料、週間スケジュール」をロードマップの形で提案してください。</code>
+        <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('prompt-notebooks').innerText); alert('コピーしました！')">📋 コピーする</button>
+      </div>
+
+      <p>AIの提案をもとに、夏休みに自分たちの手で実行する具体的な計画を整理し、<strong>ワークシートの「5. 元の調査・実験計画を更新する」テーブルに記入</strong>します。</p>
+      
+      <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.85rem; background: #ffffff;">
+        <tr style="background: #e0f2fe; color: #0369a1; font-weight: bold;">
+          <th style="border: 1px solid #bae6fd; padding: 6px; text-align: left; width: 30%;">記入項目</th>
+          <th style="border: 1px solid #bae6fd; padding: 6px; text-align: left;">具体化のポイント</th>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #bae6fd; padding: 6px; font-weight: bold;">見直す問い・分解</td>
+          <td style="border: 1px solid #bae6fd; padding: 6px;">今回の壁打ちで磨き直した「問い」と、それを検証するために調べる「小さな疑問（分解）」を書きます。</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #bae6fd; padding: 6px; font-weight: bold;">定量：数値で測る</td>
+          <td style="border: 1px solid #bae6fd; padding: 6px;">「登りやすさ」「効果」など曖昧な言葉を避け、「心拍数」「時間[秒]」「pH値」など数値で測定できる指標と器具を書きます。</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #bae6fd; padding: 6px; font-weight: bold;">定性：言葉や様子で記録</td>
+          <td style="border: 1px solid #bae6fd; padding: 6px;">数値化できない色、匂い、被験者の表情、感想などをどのように観察・記録するか書きます。</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #bae6fd; padding: 6px; font-weight: bold;">最初に、いつ・どこで・何を？</td>
+          <td style="border: 1px solid #bae6fd; padding: 6px;">夏休みに入って最初に動くための、具体的な最初のアクションスケジュールを書きます。</td>
+        </tr>
+      </table>
+
+      <div class="timer-row">
+        <button class="timer-btn" data-min="7">▶ 7分タイマー</button>
+        <span class="timer-display"></span>
+      </div>
+    </div>
+
+    <!-- ステップ6：クロージング -->
     <div class="phase" style="border-left-color: #6d28d9; background: #faf9ff;">
       <div class="phase-head">
         <span class="time-badge" style="background: #6d28d9;">45–50分</span>
-        <h3 style="color: #6d28d9;">⑤ クロージング：問いの変容と省察（リフレクション）</h3>
+        <h3 style="color: #6d28d9;">⑥ クロージング：問いの変容と省察 <span style="background: #e11d48; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-left: 6px;">ワークシート 6 に記入</span></h3>
       </div>
-      <p>本日の授業の締めくくりとして、最初のRQからどのように問いと計画が進化したかを振り返ります。</p>
+      <p>本日の授業のまとめとして、最初のRQからどのように問いと計画が進化したかを振り返ります。</p>
       <ul>
-        <li><strong>問いのBefore/Afterの対比：</strong> 授業前の問いと、AIと壁打ちして磨き上げた今の問いをワークシートに並べて記入します。</li>
+        <li><strong>問いのBefore/Afterの対比：</strong> 授業前の問いと、AIと壁打ちして磨き上げた今の問いを<strong>ワークシート「6. クロージング」欄に並べて記入</strong>します。</li>
         <li><strong>成果の言語化：</strong> 「問いの解像度」「実験の具体性」「交絡要因の排除」など、本日変化した点をワークシートの省察欄に記述します。</li>
       </ul>
       <p style="margin-top: 0.8rem; font-weight: bold; color: #6d28d9;">すべての記入が終わったら、ワークシートを記入完了状態にして本日は終了です。</p>
