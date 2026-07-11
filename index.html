@@ -290,7 +290,7 @@
     
     <div class="intro-card">
       <h2>🎯 1時間目のゴール</h2>
-      <p>手元の紙に書いた「問い（リサーチクエスチョン）」を出発点として、Gemini の <strong>Deep Research</strong> を稼働させ、世界中の先行研究やデータを一挙に調査・比較し、チームの共有 Google ドキュメントにまとめ上げます。</p>
+      <p>手元の紙に書いた「問い（リサーチクエスチョン）」を出発点として、各自が Gemini の <strong>Deep Research</strong> を実行します。世界中の先行研究やデータを調査・比較し、要点を自分のワークシートに記録します。</p>
     </div>
 
     <!-- フェーズ1：全体説明と動画 -->
@@ -389,15 +389,13 @@
     <div class="phase">
       <div class="phase-head">
         <span class="time-badge">目安: 20–50分</span>
-        <h3>③ Deep Research ＆ 先行研究の読み込み</h3>
+        <h3>③ Deep Research の実行 ＆ ワークシートへの記録</h3>
       </div>
-      <p>Gemini の <strong>Deep Research</strong> 機能をオンにし、以下のプロンプトを投げて先行研究を自動探索させます。<br>
-      <span style="font-size: 0.85rem; color: var(--sub);">（目安内訳：AI実行に約5分 ➡ ドキュメント整理に約10分 ➡ 先行研究の読み込みに約15分）</span></p>
+      <p>Gemini の <strong>Deep Research</strong> 機能をオンにし、以下のプロンプトを送って、各自で先行研究を調べます。</p>
       
       <div class="prompt-card">
         <div class="prompt-title">コピー用プロンプト（Deep Researchオンにして送信）</div>
         <code>添付された画像のリサーチクエスチョン（問い）について、先行研究や科学的な知見、関連データを詳しく調査してください。特に「すでに明らかになっている事実は何か」「どのような検証方法が過去に取られているか」を整理して出力してください。</code>
-        <button class="copy-btn">📋 コピーする</button>
       </div>
 
       <p class="note">
@@ -405,45 +403,7 @@
         Deep Researchは「計画を確認して実行」をタップする必要があり、リサーチ完了まで数分かかります。進行中（実行プロセス表示）のときは、動きが止まって見えてもページを閉じずに待ってください。
       </p>
 
-      <p style="margin-top: .8rem;">リサーチ結果が出力されたら、班で共有している <strong>Google ドキュメント</strong> にコピペして情報をまとめ        <code>添付されたNotebooksのメモ（ギャップや課題）に基づいて、私たちが「夏休みに実行するべき具体的な実験手順、測定回数、必要な材料、週間スケジュール」をロードマップの形で提案してください。</code>
-        <button class="copy-btn">📋 コピーする</button>
-      </div>
-
-      <!-- 計画の変数化スキャフォールド（アコーディオン） -->
-      <details open class="scaffold-guide">
-        <summary>🔍 計画を具体化するための「変数化チェック表」</summary>
-        <div class="scaffold-body">
-          <p>計画書を完成させて Classroom に提出する前に、以下の3つの条件（🔴🔵🟡）がはっきり書かれているか確認しよう！</p>
-          <table>
-            <thead>
-              <tr>
-                <th>仕分け</th>
-                <th>やさしく言うと</th>
-                <th>チェックポイント</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>🔴 変える条件</strong><br>(説明変数)</td>
-                <td>自分たちがわざと変える条件</td>
-                <td>太さと色など、同時に2つ以上変えてしまっていないか？（変えるのは1つだけに！）</td>
-              </tr>
-              <tr>
-                <td><strong>🔵 測る条件</strong><br>(目的変数)</td>
-                <td>結果として測定・記録するもの</td>
-                <td>「登りやすさ」のように主観のままになっていないか？（心拍数や秒数、点数などの<strong>数字で測れるもの</strong>に変えよう！）</td>
-              </tr>
-              <tr>
-                <td><strong>🟡 揃える条件</strong><br>(統制変数)</td>
-                <td>結果を狂わせないために、同じにする条件</td>
-                <td>気温、測定する時間帯、実験する場所など、揃えるべき条件をすべて書き出して計画に入れたか？</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </details>
-
-      <p style="margin-top: .8rem;">AIと対話して「これなら本当に夏休みに自分たちで測定できる！」と思える具体的な計画書ドキュメントを完成させ、<strong>Google Classroom へ提出</strong>して終了です。</p>
+      <p style="margin-top: .8rem;">リサーチ結果が出力されたら、各自が要点を自分の<strong>ワークシート</strong>に記録します。自分の問いに関係する事実、調べ方、気づきを選んで残しましょう。</p>
 
       <div class="timer-row">
         <button class="timer-btn" data-min="25">▶ 25分タイマー</button>
@@ -458,7 +418,7 @@
   <section id="pane2" class="pane">
     <div class="intro-card">
       <h2>🔬 2時間目：分析 &amp; 計画具体化</h2>
-      <p>1時間目の Deep Research 結果をもとに、先行研究との「ズレ（隙間）」を特定し、夏休みに実行できる具体的な研究計画書を完成させます。</p>
+      <p>1時間目に各自が記録したワークシートと Deep Research の出力を手がかりに、先行研究との「ズレ（隙間）」を特定し、夏休みに実行できる具体的な研究計画をワークシートにまとめます。</p>
     </div>
 
     <!-- フェーズ1：NotebookLMで先行研究のギャップを探す -->
@@ -467,21 +427,21 @@
         <span class="time-badge">目安: 15–25分</span>
         <h3>① NotebookLM で先行研究との「ズレ」を探す</h3>
       </div>
-      <p>1時間目にGemini Deep Researchで集めた先行研究の文書を <strong>NotebookLM</strong> にインポートし、自分たちの問いとの「隙間（ギャップ）」を探しましょう。</p>
+      <p>1時間目の Deep Research の出力を <strong>NotebookLM</strong> にソースとして追加し、ワークシートを見ながら自分の問いとの「隙間（ギャップ）」を探しましょう。</p>
       <ul>
-        <li><strong>手順①</strong>: 1時間目で作った Google ドキュメント（Deep Research まとめ）を NotebookLM に追加します。</li>
+        <li><strong>手順①</strong>: 1時間目の Deep Research の出力を NotebookLM にソースとして追加します。</li>
         <li><strong>手順②</strong>: チャット欄に以下のプロンプトを貼り付けて送信します。</li>
       </ul>
 
       <div class="prompt-card">
         <div class="prompt-title">NotebookLM チャット用プロンプト</div>
-        <code>このソースドキュメントに記載されている先行研究と、私たちの問いを比較し、「まだ明らかにされていない部分（ギャップ）」や「高校生が学校の設備で検証できる具体的な余地」をいくつか挙げてください。</code>
+        <code>このソースに記載されている先行研究と、私の問いを比較し、「まだ明らかにされていない部分（ギャップ）」や「高校生が学校の設備で検証できる具体的な余地」をいくつか挙げてください。</code>
         <button class="copy-btn">📋 コピーする</button>
       </div>
 
       <p class="note">
         💡 <strong>ポイント</strong><br>
-        NotebookLM の回答に出てきた「ギャップ候補」の中から、班で話し合って「一番おもしろそう」かつ「夏休みにできそう」なものを1つ選びましょう。選んだ候補を Google ドキュメントの計画書にメモしておきます。
+        NotebookLM の回答に出てきた「ギャップ候補」の中から、自分が「一番おもしろそう」かつ「夏休みにできそう」と思うものを選びましょう。選んだ候補をワークシートの「計画のヒント」に記録します。
       </p>
 
       <div class="timer-row">
@@ -538,7 +498,7 @@
         </div>
       </details>
 
-      <p style="margin-top: .8rem;">AIと対話して「これなら本当に夏休みに自分たちで測定できる！」と思える具体的な計画書ドキュメントを完成させ、<strong>Google Classroom へ提出</strong>して終了です。</p>
+      <p style="margin-top: .8rem;">AIと対話して「これなら本当に夏休みに自分で測定できる！」と思える具体的な計画を<strong>ワークシート</strong>に記入し、<strong>Google Classroom へ提出</strong>して終了です。</p>
 
       <div class="timer-row">
         <button class="timer-btn" data-min="25">▶ 25分タイマー</button>
@@ -603,7 +563,7 @@
 
       <p class="note">
         💡 <strong>NotebookLMの注意点</strong><br>
-        NotebookLMはセキュリティ上の理由で「ドキュメント内に貼り付けられた外部URLの先まで読みに行くこと」ができません。必ずGoogleドキュメントに論文の要約やテキストデータそのものをあらかじめ貼り付けてからNotebookLMにアップロードしてください。
+        NotebookLMはセキュリティ上の理由で、ソース内の外部URLの先まで読みに行くことができません。論文の要約や本文など、必要な情報そのものをソースに追加してください。
       </p>
 
       <p style="margin-top: .8rem;">対話によって見つかった「まだ明らかになっていないギャップ」や「やるべきこと」は、NotebookLMの<strong>『メモ機能』を使って「計画のヒント」として残して（保存）</strong>おきます。</p>
@@ -760,7 +720,7 @@
 
     <div class="faq-item">
       <div class="faq-q">Q1. NotebookLMがドキュメントの中にある論文のURLを読み込んでくれません。</div>
-      <div class="faq-a">A1. NotebookLMはセキュリティ上、アップロードされた文章の中にあるURL先まで直接インターネットを回って読みに行くことはできません。必ず元のGoogleドキュメントの中に、論文の内容や要約など「テキストそのもの」をコピー＆ペーストした上で、NotebookLMに再読み込み（ソース更新）させてください。</div>
+      <div class="faq-a">A1. NotebookLMはセキュリティ上、アップロードされた文章の中にあるURL先まで直接インターネットを回って読みに行くことはできません。論文の内容や要約など「テキストそのもの」をソースに追加してから、NotebookLMに読み込ませてください。</div>
     </div>
 
     <div class="faq-item">
