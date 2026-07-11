@@ -6,11 +6,11 @@
 <title>探究計画の精錬 RQ & Plan Refinery — 2年生ソウタンDX講座</title>
 <style>
   :root {
-    --bg: #f5f3ff;
+    --bg: #f8fafc;
     --card: #ffffff;
     --ink: #1e293b;
     --sub: #64748b;
-    --line: rgba(124, 58, 237, 0.12);
+    --line: #e2e8f0;
     --accent: #7c3aed;       /* 2年生用の高貴なパープル */
     --accent-soft: #f5f3ff;
     --accent-hover: #6d28d9;
@@ -19,53 +19,48 @@
     --ng: #ef4444;
     --warning: #f59e0b;
     --warning-soft: #fef3c7;
-    --shadow: 0 10px 15px -3px rgba(124, 58, 237, 0.05), 0 4px 6px -4px rgba(124, 58, 237, 0.05);
-    --shadow-lg: 0 20px 25px -5px rgba(124, 58, 237, 0.08), 0 8px 10px -6px rgba(124, 58, 237, 0.08);
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   }
 
   html { color-scheme: light; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
-    background: linear-gradient(135deg, #f5f3ff 0%, #faf5ff 50%, #f8fafc 100%) fixed;
-    color: var(--ink); line-height: 1.75;
+    background: var(--bg); color: var(--ink); line-height: 1.7;
     padding-bottom: 5rem;
   }
 
   header {
     background: linear-gradient(135deg, var(--accent) 0%, #4c1d95 100%);
-    color: #fff; padding: 2.2rem 1.5rem 2rem;
+    color: #fff; padding: 2rem 1.5rem 1.8rem;
     text-align: center;
-    box-shadow: var(--shadow-lg);
-    position: relative;
+    box-shadow: var(--shadow);
   }
-  header h1 { font-size: 1.7rem; font-weight: 800; letter-spacing: .05em; text-shadow: 0 2px 4px rgba(0,0,0,0.15); }
-  header p { font-size: .95rem; opacity: .9; margin-top: .5rem; }
+  header h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: .05em; }
+  header p { font-size: .92rem; opacity: .9; margin-top: .4rem; }
 
   /* AI 3つの約束 */
   .rules-banner {
-    max-width: 760px; margin: 1.2rem auto 0;
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    max-width: 760px; margin: 1rem auto 0;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 12px; padding: .6rem 1rem;
     display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
     font-size: .8rem; font-weight: 700;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
   }
   .rules-banner span { display: flex; align-items: center; gap: .3rem; }
 
   nav {
     position: sticky; top: 0; z-index: 10; display: flex;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(8px);
-    border-bottom: 2px solid var(--line);
-    box-shadow: 0 4px 6px -1px rgba(124, 58, 237, 0.03);
+    background: var(--card); border-bottom: 2px solid var(--line);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     overflow-x: auto; -webkit-overflow-scrolling: touch;
   }
   nav button {
-    flex: 1 0 auto; min-width: 95px; padding: 1rem .5rem; border: none; background: none;
-    font-size: .92rem; font-weight: 700; color: var(--sub); cursor: pointer;
-    border-bottom: 4px solid transparent; font-family: inherit; white-space: nowrap;
+    flex: 1 0 auto; min-width: 90px; padding: .9rem .5rem; border: none; background: none;
+    font-size: .9rem; font-weight: 700; color: var(--sub); cursor: pointer;
+    border-bottom: 3.5px solid transparent; font-family: inherit; white-space: nowrap;
     transition: all 0.2s ease;
   }
   nav button:hover { color: var(--accent); }
@@ -80,39 +75,29 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* 進捗アナウンス */
-  .pace-note {
-    background: var(--warning-soft); border: 1.5px solid var(--warning);
-    border-radius: 12px; padding: .8rem 1.1rem; margin: .5rem 0 1.2rem;
-    font-size: .85rem; color: #b45309; font-weight: 700; line-height: 1.5;
-    box-shadow: var(--shadow);
-  }
-
   .intro-card {
     background: var(--card); border: 1px solid var(--line); border-radius: 14px;
-    padding: 1.3rem 1.5rem; margin: .5rem 0 1.2rem; box-shadow: var(--shadow-lg);
+    padding: 1.2rem 1.4rem; margin: .5rem 0 1.2rem; box-shadow: var(--shadow);
   }
-  .intro-card h2 { font-size: 1.2rem; color: var(--accent); margin-bottom: .5rem; display: flex; align-items: center; gap: .4rem; }
+  .intro-card h2 { font-size: 1.15rem; color: var(--accent); margin-bottom: .5rem; display: flex; align-items: center; gap: .4rem; }
   .intro-card p { font-size: .9rem; color: var(--sub); }
 
   .phase {
-    background: var(--card); border: 1px solid rgba(124, 58, 237, 0.15); border-radius: 18px;
-    padding: 1.5rem 1.6rem; margin: 1.2rem 0;
-    box-shadow: var(--shadow);
-    border-left: 6px solid var(--accent);
-    position: relative;
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    padding: 1.3rem 1.5rem; margin: 1rem 0; box-shadow: var(--shadow);
+    border-left: 5px solid var(--accent);
   }
   .phase-head { display: flex; align-items: baseline; gap: .7rem; flex-wrap: wrap; margin-bottom: .8rem; }
   .time-badge {
     background: var(--accent); color: #fff; border-radius: 999px;
-    font-size: .75rem; font-weight: 800; padding: .2rem .75rem; white-space: nowrap;
-    box-shadow: 0 4px 6px rgba(124, 58, 237, 0.2);
+    font-size: .75rem; font-weight: 800; padding: .15rem .7rem; white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(124, 58, 237, 0.2);
   }
-  .phase h3 { font-size: 1.15rem; color: var(--ink); font-weight: 700; }
+  .phase h3 { font-size: 1.1rem; color: var(--ink); font-weight: 700; }
   .phase p, .phase li { font-size: .92rem; color: var(--ink); }
   .phase ul, .phase ol { padding-left: 1.3rem; margin-top: .5rem; }
-  .phase li { margin-bottom: .4rem; }
-  .phase .note { color: var(--sub); font-size: .84rem; margin-top: .6rem; padding: .6rem; background: var(--bg); border-radius: 8px; border-left: 3px solid var(--line); }
+  .phase li { margin-bottom: .3rem; }
+  .phase .note { color: var(--sub); font-size: .84rem; margin-top: .6rem; padding: .5rem; background: var(--bg); border-radius: 8px; border-left: 3px solid var(--line); }
 
   /* 動画プレースホルダー */
   .video-container {
@@ -189,27 +174,10 @@
   .form-btn:hover { background: #059669; transform: translateY(-1px); }
 
   /* テーブル */
-  table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: .8rem 0; box-shadow: var(--shadow); border-radius: 10px; overflow: hidden; border: 1px solid var(--line); }
-  th, td { border: 1px solid var(--line); padding: .7rem .9rem; text-align: left; }
-  th { background: linear-gradient(135deg, var(--accent-soft) 0%, #edd8ff 100%); color: var(--accent); font-weight: 800; }
+  table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: .8rem 0; box-shadow: var(--shadow); border-radius: 8px; overflow: hidden; }
+  th, td { border: 1px solid var(--line); padding: .6rem .8rem; text-align: left; }
+  th { background: var(--accent-soft); color: var(--accent); font-weight: 800; }
   td { background: #fff; }
-
-  /* チェックリスト */
-  .checklist {
-    list-style: none !important; padding-left: 0 !important; margin: 1rem 0;
-    background: #fdfeff; border: 1.5px dashed rgba(124, 58, 237, 0.3); border-radius: 12px;
-    padding: 1.1rem 1.3rem !important; box-shadow: inset 0 2px 4px rgba(0,0,0,0.01);
-  }
-  .checklist li {
-    display: flex; align-items: flex-start; gap: .6rem; margin-bottom: .6rem;
-    font-size: .88rem !important; line-height: 1.5; color: var(--ink);
-  }
-  .checklist li:last-child { margin-bottom: 0; }
-  .checklist input[type="checkbox"] {
-    width: 18px; height: 18px; border: 2px solid var(--accent); border-radius: 4px;
-    accent-color: var(--accent); cursor: pointer; margin-top: .15rem; flex-shrink: 0;
-  }
-  .checklist label { cursor: pointer; user-select: none; }
 
   /* FAQ */
   .faq-item {
@@ -218,43 +186,6 @@
   }
   .faq-q { font-weight: 800; font-size: .95rem; color: var(--accent); display: flex; gap: .4rem; margin-bottom: .4rem; }
   .faq-a { font-size: .9rem; color: var(--ink); border-left: 3px solid var(--line); padding-left: .8rem; }
-
-  /* アコーディオン（スキャフォールド用） */
-  details.scaffold-guide {
-    background: var(--accent-soft); border: 1.5px solid var(--accent);
-    border-radius: 12px; padding: 0.2rem 1.1rem; margin: 1rem 0;
-    box-shadow: var(--shadow);
-  }
-  details.scaffold-guide summary {
-    cursor: pointer; font-weight: 800; color: var(--accent);
-    padding: 0.8rem 0; font-size: 0.95rem; outline: none;
-    user-select: none;
-  }
-  details.scaffold-guide[open] {
-    padding-bottom: 0.8rem;
-  }
-  .scaffold-body {
-    font-size: 0.88rem; color: var(--ink); line-height: 1.6;
-  }
-  .scaffold-body p { margin-bottom: 0.6rem; }
-  .scaffold-body table { margin-top: 0.5rem; font-size: 0.82rem; }
-  .scaffold-body td strong { color: var(--accent); }
-
-  /* 3つの関門カード（3ゲート） */
-  .gate-container {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: 0.8rem; margin: 1rem 0;
-  }
-  .gate-card {
-    background: var(--card); border: 1.5px solid var(--line); border-top: 5px solid var(--accent);
-    border-radius: 12px; padding: 1.1rem 1rem; box-shadow: var(--shadow);
-  }
-  .gate-card h4 {
-    font-size: 0.92rem; font-weight: 800; color: var(--accent); margin-bottom: 0.4rem;
-  }
-  .gate-card p {
-    font-size: 0.82rem; color: var(--sub); line-height: 1.5;
-  }
 
   footer { text-align: center; color: var(--sub); font-size: .75rem; margin-top: 3rem; padding: 1.5rem 1rem; border-top: 1px solid var(--line); }
 </style>
@@ -280,11 +211,6 @@
 
 <main>
 
-  <div class="pace-note">
-    📢 <strong>【生徒のみなさんへ】</strong><br>
-    各ステップに書かれている時間は「全体のペース配分の目安」です。チームの研究テーマによって、Deep Researchの待ち時間や議論の長さは変わります。自分たちのペースで進めて構いません！
-  </div>
-
   <!-- ================= 1時間目 ================= -->
   <section id="pane1" class="pane active">
     
@@ -296,7 +222,7 @@
     <!-- フェーズ1：全体説明と動画 -->
     <div class="phase">
       <div class="phase-head">
-        <span class="time-badge">目安: 0–10分</span>
+        <span class="time-badge">0–10分</span>
         <h3>① 導入 ＆ レクチャー動画の視聴</h3>
       </div>
       <p>先生からの全体のゴール提示のあと、班で集まり解説動画（1時間目の手順・コツ）を1台の iPad を囲んで共同で視聴します（イヤホンは不要です）。</p>
@@ -308,48 +234,16 @@
         <span class="video-sub">（5分程度の解説動画を班で共同視聴）</span>
       </div>
 
-      <!-- 問いのBefore/After対比（SSコンテンツ） -->
-      <div style="margin-top: 1.2rem;">
-        <h4 style="font-size: 0.95rem; font-weight: 800; color: var(--accent); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.3rem;">💡 導入：問いは「見つける」より「磨く」</h4>
-        <p style="font-size: 0.85rem; color: var(--sub); margin-bottom: 0.5rem;">粗い問いが、これからのワークでどう具体的に化けるか、実例でイメージを掴もう！</p>
-        <table>
-          <thead>
-            <tr>
-              <th>Before（粗い問い）</th>
-              <th>After（磨かれた問い）</th>
-              <th>なぜAfterが良いの？（ポイント）</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>登りやすい階段って？</td>
-              <td>本校 of 階段で、<strong>蹴上×踏面を変えると</strong>登坂時の<strong>心拍増加はどう変わるか</strong></td>
-              <td>「登りやすさ」というふわっとした言葉を、<strong>「心拍数」という数値で測れるもの</strong>に変えたから！</td>
-            </tr>
-            <tr>
-              <td>化粧品って酸化を防げるの？</td>
-              <td>化粧水中の<strong>ビタミンC濃度を変えると</strong>、リンゴ切片の<strong>褐変（明度変化）をどれだけ遅らせるか</strong></td>
-              <td>「防げるの？」という疑問を、実際にリンゴを使って<strong>比べられる実験</strong>にしたから！</td>
-            </tr>
-            <tr>
-              <td>フォントで印象が変わる？</td>
-              <td>フォントの<strong>太さ（細/中/太）を変えると</strong>、広告文の<strong>"信頼感"評点をどう変えるか</strong></td>
-              <td>印象という曖昧なものを、アンケートで**点数化（数値化）して比べられる**ようにしたから！</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
       <div class="timer-row">
         <button class="timer-btn" data-min="10">▶ 10分タイマー</button>
         <span class="timer-display"></span>
       </div>
     </div>
 
-      <!-- フェーズ2：写真撮影とアップロード -->
+    <!-- フェーズ2：写真撮影とアップロード -->
     <div class="phase">
       <div class="phase-head">
-        <span class="time-badge">目安: 10–20分</span>
+        <span class="time-badge">10–20分</span>
         <h3>② 問いの撮影 ＆ Geminiへのアップロード</h3>
       </div>
       <p>各自、これまで紙のワークシートに手書きで書いていたリサーチクエスチョン（問い）を、iPadのカメラで『写真撮影』してGeminiに添付します。</p>
@@ -357,42 +251,19 @@
         <li><strong>綺麗に撮影するコツ</strong>: 影が入らないよう、紙を机の上から少し浮かせて撮ると綺麗に写ります。</li>
         <li><strong>不同意生徒の配慮</strong>: 生成AI利用不同意の生徒は、チームメンバーの撮影や添付作業に交ざって、一緒に問いのテキストを調整します。</li>
       </ul>
-
-      <!-- 送信前のセルフチェック：3つの関門（SSコンテンツ） -->
-      <div style="margin-top: 1.2rem; border-top: 1.5px dashed var(--line); padding-top: 1.2rem;">
-        <h4 style="font-size: 0.95rem; font-weight: 800; color: var(--accent); margin-bottom: 0.5rem;">🔍 撮影・送信前の「３つの関門（セルフチェック）」</h4>
-        <p style="font-size: 0.85rem; color: var(--sub); margin-bottom: 0.8rem;">iPadで撮影して Gemini に送信する前に、自分たちの問いがこの３つのゲートを通過できるかチェックしよう！</p>
-        <div class="gate-container">
-          <div class="gate-card">
-            <h4>① だれにでも伝わる？ (clear)</h4>
-            <p>探究のことを何も知らないクラスの友達に問いを言ったとき、<strong>「それって、つまり〇〇を調べるんだね！」</strong>とすぐに言い直してもらえるか？</p>
-          </div>
-          <div class="gate-card">
-            <h4>② 学校で本当にできる？ (focused)</h4>
-            <p>夏休みの短い時間（数日〜１週間）や、学校の理科室にある道具、各自の iPad だけで、<strong>本当に最後まで実験やアンケートをやり切れるか？</strong></p>
-          </div>
-          <div class="gate-card">
-            <h4>③ コピペで終わらない？ (arguable)</h4>
-            <p>ネットで検索して終わりではなく、自分たちのデータをもとに<strong>「だから私たちは〇〇だと思う！」という独自の意見（主張）</strong>が言えるか？</p>
-          </div>
-        </div>
-        <p style="font-size: 0.78rem; color: var(--sub); margin-top: 0.4rem; font-style: italic;">※ 国際バカロレア（IB）の卒業論文審査基準をもとにした、本物の物差しです。弱い部分があれば、班で少し言葉を直してから撮影しましょう。</p>
-      </div>
-
       <div class="timer-row">
         <button class="timer-btn" data-min="10">▶ 10分タイマー</button>
         <span class="timer-display"></span>
       </div>
     </div>
 
-    <!-- フェーズ3：Deep Research ＆ 先行研究の読み込み -->
+    <!-- フェーズ3：Deep Research -->
     <div class="phase">
       <div class="phase-head">
-        <span class="time-badge">目安: 20–50分</span>
-        <h3>③ Deep Research ＆ 先行研究の読み込み</h3>
+        <span class="time-badge">20–50分</span>
+        <h3>③ Deep Research の実行 ＆ ドキュメント化</h3>
       </div>
-      <p>Gemini の <strong>Deep Research</strong> 機能をオンにし、以下のプロンプトを投げて先行研究を自動探索させます。<br>
-      <span style="font-size: 0.85rem; color: var(--sub);">（目安内訳：AI実行に約5分 ➡ ドキュメント整理に約10分 ➡ 先行研究の読み込みに約15分）</span></p>
+      <p>Gemini の <strong>Deep Research</strong> 機能をオンにし、以下のプロンプトを投げて先行研究を自動探索させます。</p>
       
       <div class="prompt-card">
         <div class="prompt-title">コピー用プロンプト（Deep Researchオンにして送信）</div>
@@ -405,206 +276,52 @@
         Deep Researchは「計画を確認して実行」をタップする必要があり、リサーチ完了まで数分かかります。進行中（実行プロセス表示）のときは、動きが止まって見えてもページを閉じずに待ってください。
       </p>
 
-      <p style="margin-top: .8rem;">リサーチ結果が出力されたら、班で共有している <strong>Google ドキュメント</strong> にコピペして情報をまとめ        <code>添付されたNotebooksのメモ（ギャップや課題）に基づいて、私たちが「夏休みに実行するべき具体的な実験手順、測定回数、必要な材料、週間スケジュール」をロードマップの形で提案してください。</code>
-        <button class="copy-btn">📋 コピーする</button>
-      </div>
-
-      <!-- 計画の変数化スキャフォールド（アコーディオン） -->
-      <details open class="scaffold-guide">
-        <summary>🔍 計画を具体化するための「変数化チェック表」</summary>
-        <div class="scaffold-body">
-          <p>計画書を完成させて Classroom に提出する前に、以下の3つの条件（🔴🔵🟡）がはっきり書かれているか確認しよう！</p>
-          <table>
-            <thead>
-              <tr>
-                <th>仕分け</th>
-                <th>やさしく言うと</th>
-                <th>チェックポイント</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>🔴 変える条件</strong><br>(説明変数)</td>
-                <td>自分たちがわざと変える条件</td>
-                <td>太さと色など、同時に2つ以上変えてしまっていないか？（変えるのは1つだけに！）</td>
-              </tr>
-              <tr>
-                <td><strong>🔵 測る条件</strong><br>(目的変数)</td>
-                <td>結果として測定・記録するもの</td>
-                <td>「登りやすさ」のように主観のままになっていないか？（心拍数や秒数、点数などの<strong>数字で測れるもの</strong>に変えよう！）</td>
-              </tr>
-              <tr>
-                <td><strong>🟡 揃える条件</strong><br>(統制変数)</td>
-                <td>結果を狂わせないために、同じにする条件</td>
-                <td>気温、測定する時間帯、実験する場所など、揃えるべき条件をすべて書き出して計画に入れたか？</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </details>
-
-      <p style="margin-top: .8rem;">AIと対話して「これなら本当に夏休みに自分たちで測定できる！」と思える具体的な計画書ドキュメントを完成させ、<strong>Google Classroom へ提出</strong>して終了です。</p>
-
+      <p style="margin-top: .8rem;">リサーチ結果が出力されたら、班で共有している <strong>Google ドキュメント</strong> にコピペして情報をまとめます。iPad の Split View（分割画面）を使うと、Gemini と Docs を並べて作業しやすくなります。</p>
+      
       <div class="timer-row">
-        <button class="timer-btn" data-min="25">▶ 25分タイマー</button>
+        <button class="timer-btn" data-min="30">▶ 30分タイマー</button>
         <span class="timer-display"></span>
       </div>
     </div>
 
   </section>
 
-
-  <!-- ================= 2時間目 (分析&計画具体化) ================= -->
+  <!-- ================= 2時間目 ================= -->
   <section id="pane2" class="pane">
+
     <div class="intro-card">
-      <h2>🔬 2時間目：分析 &amp; 計画具体化</h2>
-      <p>1時間目の Deep Research 結果をもとに、先行研究との「ズレ（隙間）」を特定し、夏休みに実行できる具体的な研究計画書を完成させます。</p>
+      <h2>🎯 2時間目のゴール</h2>
+      <p>1時間目に作ったGoogleドキュメントを <strong>NotebookLM</strong> に読み込ませ、「先行研究と自分たちの問いのギャップ（まだ誰も調べていない空白地帯）」を対話で探し出し、夏休みの具体的な計画へと昇華させます。</p>
     </div>
 
-    <!-- フェーズ1：NotebookLMで先行研究のギャップを探す -->
+    <!-- フェーズ1：動画視聴 -->
     <div class="phase">
       <div class="phase-head">
-        <span class="time-badge">目安: 15–25分</span>
-        <h3>① NotebookLM で先行研究との「ズレ」を探す</h3>
+        <span class="time-badge">0–5分</span>
+        <h3>① 2時間目のレクチャー動画視聴</h3>
       </div>
-      <p>1時間目にGemini Deep Researchで集めた先行研究の文書を <strong>NotebookLM</strong> にインポートし、自分たちの問いとの「隙間（ギャップ）」を探しましょう。</p>
-      <ul>
-        <li><strong>手順①</strong>: 1時間目で作った Google ドキュメント（Deep Research まとめ）を NotebookLM に追加します。</li>
-        <li><strong>手順②</strong>: チャット欄に以下のプロンプトを貼り付けて送信します。</li>
-      </ul>
+      <p>2時間目の開始チャイム後、NotebookLMの使い方や「ギャップ分析」のやり方を解説した動画を班で共同視聴します。</p>
 
-      <div class="prompt-card">
-        <div class="prompt-title">NotebookLM チャット用プロンプト</div>
-        <code>このソースドキュメントに記載されている先行研究と、私たちの問いを比較し、「まだ明らかにされていない部分（ギャップ）」や「高校生が学校の設備で検証できる具体的な余地」をいくつか挙げてください。</code>
-        <button class="copy-btn">📋 コピーする</button>
+      <!-- 動画埋め込みプレースホルダー -->
+      <div class="video-container">
+        <div class="video-icon">▶</div>
+        <p class="video-text">【2時間目の解説動画：ここに後で埋め込みます】</p>
+        <span class="video-sub">（5分程度の解説動画を班で共同視聴）</span>
       </div>
-
-      <p class="note">
-        💡 <strong>ポイント</strong><br>
-        NotebookLM の回答に出てきた「ギャップ候補」の中から、班で話し合って「一番おもしろそう」かつ「夏休みにできそう」なものを1つ選びましょう。選んだ候補を Google ドキュメントの計画書にメモしておきます。
-      </p>
 
       <div class="timer-row">
-        <button class="timer-btn" data-min="20">▶ 20分タイマー</button>
+        <button class="timer-btn" data-min="5">▶ 5分タイマー</button>
         <span class="timer-display"></span>
       </div>
     </div>
 
-    <!-- フェーズ2：Gemini Notebooks で計画書を具体化 -->
+    <!-- フェーズ2：NotebookLMギャップ分析 -->
     <div class="phase">
       <div class="phase-head">
-        <span class="time-badge">目安: 20–30分</span>
-        <h3>② Gemini Notebooks で研究計画を具体化する</h3>
+        <span class="time-badge">5–25分</span>
+        <h3>② NotebookLM へのソース追加 ＆ ギャップ分析</h3>
       </div>
-      <p>Gemini の <strong>Notebooks</strong> 機能に、NotebookLM のメモ（ギャップや課題）を添付して、夏休みの実験ロードマップを作成します。</p>
-
-      <div class="prompt-card">
-        <div class="prompt-title">Gemini（Notebooks連携用）計画具体化プロンプト</div>
-        <code>添付されたNotebooksのメモ（ギャップや課題）に基づいて、私たちが「夏休みに実行するべき具体的な実験手順、測定回数、必要な材料、週間スケジュール」をロードマップの形で提案してください。</code>
-        <button class="copy-btn">📋 コピーする</button>
-      </div>
-
-      <!-- 計画の変数化スキャフォールド（アコーディオン） -->
-      <details open class="scaffold-guide">
-        <summary>🔍 計画を具体化するための「変数化チェック表」</summary>
-        <div class="scaffold-body">
-          <p>計画書を完成させて Classroom に提出する前に、以下の3つの条件（🔴🔵🟡）がはっきり書かれているか確認しよう！</p>
-          <table>
-            <thead>
-              <tr>
-                <th>仕分け</th>
-                <th>やさしく言うと</th>
-                <th>チェックポイント</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>🔴 変える条件</strong><br>(説明変数)</td>
-                <td>自分たちがわざと変える条件</td>
-                <td>太さと色など、同時に2つ以上変えてしまっていないか？（変えるのは1つだけに！）</td>
-              </tr>
-              <tr>
-                <td><strong>🔵 測る条件</strong><br>(目的変数)</td>
-                <td>結果として測定・記録するもの</td>
-                <td>「登りやすさ」のように主観のままになっていないか？（心拍数や秒数、点数などの<strong>数字で測れるもの</strong>に変えよう！）</td>
-              </tr>
-              <tr>
-                <td><strong>🟡 揃える条件</strong><br>(統制変数)</td>
-                <td>結果を狂わせないために、同じにする条件</td>
-                <td>気温、測定する時間帯、実験する場所など、揃えるべき条件をすべて書き出して計画に入れたか？</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </details>
-
-      <p style="margin-top: .8rem;">AIと対話して「これなら本当に夏休みに自分たちで測定できる！」と思える具体的な計画書ドキュメントを完成させ、<strong>Google Classroom へ提出</strong>して終了です。</p>
-
-      <div class="timer-row">
-        <button class="timer-btn" data-min="25">▶ 25分タイマー</button>
-        <span class="timer-display"></span>
-      </div>
-    </div>
-
-  </section>
-
-  <!-- ================= 道具箱 (プロンプト一覧) ================= -->
-  <section id="panePrompts" class="pane">
-    <div class="intro-card">
-      <h2>🛠️ 道具箱（プロンプト一覧）</h2>
-      <p>授業中に使用する各種AI（Gemini Deep Research / NotebookLM / Gemini Notebooks）への指示テキスト一覧です。状況に合わせてアレンジして使用してください。</p>
-    </div>
-
-    <div class="phase">
-      <h3>1. 先行研究の徹底リサーチ（1時間目用）</h3>
-      <p style="font-size: .85rem; color: var(--sub); margin-bottom: .5rem;">※Geminiの「Deep Research」をONにして送信してください。</p>
-      <div class="prompt-card">
-        <code>添付された画像のリサーチクエスチョン（問い）について、先行研究や科学的な知見、関連データを詳しく調査してください。特に「すでに明らかになっている事実は何か」「どのような検証方法が過去に取られているか」を整理して出力してください。</code>
-        <button class="copy-btn">📋 コピーする</button>
-      </div>
-    </div>
-
-    <div class="phase">
-      <h3>1.5 批判的ラダー（反論壁打ち）プロンプト（2時間目・中盤用）</h3>
-      <div class="prompt-box">
-        <div class="prompt-header">
-          <span>コピペ用プロンプト</span>
-          <button class="copy-btn" onclick="copyPrompt('prompt-list-ladder')">コピー</button>
-        </div>
-        <textarea id="prompt-list-ladder" class="prompt-area" readonly>私たちの問いと実験計画です：[自分たちの内容を貼り付け]
-1. この計画の弱点や突っ込みどころを5つ、コンテストの審査員のように厳しく指摘してください。
-2. この方法では問いに正しく答えたことにならないケースや、結果を別視点で説明できてしまう要因（交絡要因）を挙げてください。</textarea>
-      </div>
-
-      <h3>2. 先行研究との「ズレ（隙間）」を探す（2時間目用）</h3>
-      <p style="font-size: .85rem; color: var(--sub); margin-bottom: .5rem;">※NotebookLMのチャット欄に送信してください。</p>
-      <div class="prompt-card">
-        <code>このソースドキュメントに記載されている先行研究と、私たちの問いを比較し、「まだ明らかにされていない部分（ギャップ）」や「高校生が学校の設備で検証できる具体的な余地」をいくつか挙げてください。</code>
-        <button class="copy-btn">📋 コピーする</button>
-      </div>
-    </div>
-
-    <div class="phase">
-      <h3>3. 夏休みの研究計画に具体化する（2時間目用）</h3>
-      <p style="font-size: .85rem; color: var(--sub); margin-bottom: .5rem;">※GeminiでNotebooksを添付した後に送信してください。</p>
-      <div class="prompt-card">
-        <code>添付されたNotebooksのメモ（ギャップや課題）に基づいて、私たちが「夏休みに実行するべき具体的な実験手順、測定回数、必要な材料、週間スケジュール」をロードマップの形で提案してください。</code>
-        <button class="copy-btn">📋 コピーする</button>
-      </div>
-    </div>
-
-    <div class="phase">
-      <h3>4. 【応用】計画のセーフティ検証（さらに磨きたい班用）</h3>
-      <div class="prompt-card">
-        <code>この実験計画で「想定される失敗パターン」や「結果が狂ってしまう原因（揃えるべき条件の見落とし）」を3つ教えてください。また、その対策も提案してください。</code>
-        <button class="copy-btn">📋 コピーする</button>
-      </div>
-    </div>
-
-    <!-- やさしい用語ミニ辞典（アコーディオン） -->
-    <div style="margin-top: 1.2rem;">
-      <details open class="scaffold-guide">
-        <summary>📘 AIとの対話がスムーズになる「やさしい用語ミニ辞典」</summary>後、対話機能を使って「自分たちの問いがどこまで明らかになっていて、どこがまだ分かっていないか」を抽出します。</p>
+      <p>1時間目に作ったGoogleドキュメントのテキストを NotebookLM のソースとして新規追加します。追加後、対話機能を使って「自分たちの問いがどこまで明らかになっていて、どこがまだ分かっていないか」を抽出します。</p>
       
       <div class="prompt-card">
         <div class="prompt-title">NotebookLM用壁打ちプロンプト</div>
@@ -628,7 +345,7 @@
     <!-- フェーズ3：計画の具体化と提出 -->
     <div class="phase">
       <div class="phase-head">
-        <span class="time-badge">目安: 25–50分</span>
+        <span class="time-badge">25–50分</span>
         <h3>③ Gemini Notebooks 連携 ＆ 計画書の提出</h3>
       </div>
       <p>Gemini を再度開き、入力欄左側の＋ボタン（添付メニュー）から <strong>Notebooks</strong> を選択して、先ほど NotebookLM で作成したメモを読み込ませます。夏休みの具体的な「やることリスト」と「実験スケジュール」に具体化させます。</p>
@@ -638,40 +355,6 @@
         <code>添付されたNotebooksのメモ（ギャップや課題）に基づいて、私たちが「夏休みに実行するべき具体的な実験手順、測定回数、必要な材料、週間スケジュール」をロードマップの形で提案してください。</code>
         <button class="copy-btn">📋 コピーする</button>
       </div>
-
-      <!-- 計画の変数化スキャフォールド（アコーディオン） -->
-      <details open class="scaffold-guide">
-        <summary>🔍 計画を具体化するための「変数化チェック表」</summary>
-        <div class="scaffold-body">
-          <p>計画書を完成させて Classroom に提出する前に、以下の3つの条件（🔴🔵🟡）がはっきり書かれているか確認しよう！</p>
-          <table>
-            <thead>
-              <tr>
-                <th>仕分け</th>
-                <th>やさしく言うと</th>
-                <th>チェックポイント</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>🔴 変える条件</strong><br>(説明変数)</td>
-                <td>自分たちがわざと変える条件</td>
-                <td>太さと色など、同時に2つ以上変えてしまっていないか？（変えるのは1つだけに！）</td>
-              </tr>
-              <tr>
-                <td><strong>🔵 測る条件</strong><br>(目的変数)</td>
-                <td>結果として測定・記録するもの</td>
-                <td>「登りやすさ」のように主観のままになっていないか？（心拍数や秒数、点数などの<strong>数字で測れるもの</strong>に変えよう！）</td>
-              </tr>
-              <tr>
-                <td><strong>🟡 揃える条件</strong><br>(統制変数)</td>
-                <td>結果を狂わせないために、同じにする条件</td>
-                <td>気温、測定する時間帯、実験する場所など、揃えるべき条件をすべて書き出して計画に入れたか？</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </details>
 
       <p style="margin-top: .8rem;">AIと対話して「これなら本当に夏休みに自分たちで測定できる！」と思える具体的な計画書ドキュメントを完成させ、<strong>Google Classroom へ提出</strong>して終了です。</p>
 
@@ -700,15 +383,15 @@
     </div>
 
     <div class="phase">
-      <h3>1.5 批判的ラダー（反論壁打ち）プロンプト（2時間目・中盤用）</h3>
-      <div class="prompt-box">
-        <div class="prompt-header">
+      <h3>1.5 Gemini批判的ラダー・反論壁打ち（2時間目・中盤用）</h3>
+      <div style="background: #ffffff; border: 1.5px solid #b45309; border-radius: 8px; margin: 12px 0; padding: 12px; font-family: monospace; font-size: .85rem; color: #374151; position: relative;">
+        <div style="font-weight: bold; color: #b45309; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">
           <span>コピペ用プロンプト</span>
-          <button class="copy-btn" onclick="copyPrompt('prompt-list-ladder')">コピー</button>
+          <button style="background: #b45309; color: white; border: none; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem; cursor: pointer;" onclick="navigator.clipboard.writeText(document.getElementById('prompt-list-ladder-el').innerText); alert('コピーしました！')">コピー</button>
         </div>
-        <textarea id="prompt-list-ladder" class="prompt-area" readonly>私たちの問いと実験計画です：[自分たちの内容を貼り付け]
+        <pre id="prompt-list-ladder-el" style="white-space: pre-wrap; margin: 0; font-family: inherit;">私たちの問いと実験計画です：[自分たちの内容を貼り付け]
 1. この計画の弱点や突っ込みどころを5つ、コンテストの審査員のように厳しく指摘してください。
-2. この方法では問いに正しく答えたことにならないケースや、結果を別視点で説明できてしまう要因（交絡要因）を挙げてください。</textarea>
+2. この方法では問いに正しく答えたことにならないケースや、結果を別視点で説明できてしまう要因（交絡要因）を挙げてください。</pre>
       </div>
 
       <h3>2. 先行研究との「ズレ（隙間）」を探す（2時間目用）</h3>
@@ -734,42 +417,6 @@
         <code>この実験計画で「想定される失敗パターン」や「結果が狂ってしまう原因（揃えるべき条件の見落とし）」を3つ教えてください。また、その対策も提案してください。</code>
         <button class="copy-btn">📋 コピーする</button>
       </div>
-    </div>
-
-    <!-- やさしい用語ミニ辞典（アコーディオン） -->
-    <div style="margin-top: 1.2rem;">
-      <details class="scaffold-guide">
-        <summary>📘 AIとの対話がスムーズになる「やさしい用語ミニ辞典」</summary>
-        <div class="scaffold-body">
-          <p>AI（GeminiやNotebookLM）と会話しているときに出てくる難しい専門用語を、やさしい言葉に言い換えました。困ったときに開いてみてください。</p>
-          <table>
-            <thead>
-              <tr>
-                <th>難しい言葉</th>
-                <th>やさしい言い換え（意味）</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>仮説 (Hypothesis)</strong></td>
-                <td>「実験したら、たぶんこうなるはずだ」という科学的な予想。</td>
-              </tr>
-              <tr>
-                <td><strong>操作的定義 (Operational Definition)</strong></td>
-                <td>「登りやすさ」や「集中力」など、ふわっとした言葉を「心拍数」や「作業時間」などの<strong>具体的な数字で測るためのルール</strong>のこと。</td>
-              </tr>
-              <tr>
-                <td><strong>交絡 (Confounding)</strong></td>
-                <td>結果を狂わせる「怪しい犯人」が同時に2つ以上いて、どっちのせいで結果が変わったのか区別できない状態。（例：フォントの太さと同時に文字の色まで変えてしまうと、どっちの影響か分からなくなる）</td>
-              </tr>
-              <tr>
-                <td><strong>対照実験 (Control Experiment)</strong></td>
-                <td>効果を確かめるために、あえて「何も条件を変えていない基本グループ」を用意して比べること。（例：冷やしたお茶の効果を測るために、常温のお茶のデータも取る）</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </details>
     </div>
   </section>
 
