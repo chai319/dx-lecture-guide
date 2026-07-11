@@ -189,6 +189,34 @@
   .faq-a { font-size: .9rem; color: var(--ink); border-left: 3px solid var(--line); padding-left: .8rem; }
 
   footer { text-align: center; color: var(--sub); font-size: .75rem; margin-top: 3rem; padding: 1.5rem 1rem; border-top: 1px solid var(--line); }
+  .image-gallery {
+    display: flex;
+    gap: 12px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+  }
+  .image-gallery-item {
+    flex: 1;
+    min-width: 250px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .image-gallery-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    display: block;
+  }
+  .image-gallery-caption {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 6px;
+    text-align: center;
+    font-weight: bold;
+  }
 </style>
 </head>
 <body>
@@ -262,6 +290,25 @@
       <p class="note" style="margin-top: 1rem;">
         ⚠️ <strong>注意：</strong> このバトルは人の強さを決めるものではありません。AIに伝わる言葉にすると出力がどう変わるか確かめる科学実験です。個人情報（本名・住所・友だちの名前）は絶対に入れないでください。
       </p>
+
+      <!-- 📸 ワークシート記入例 -->
+      <p style="margin-top: 1.2rem; font-weight: bold; color: #1e3a8a; display: flex; align-items: center; gap: 6px;">
+        📸 ワークシートの記入例（参考にしよう！）
+      </p>
+      <div class="image-gallery">
+        <div class="image-gallery-item">
+          <a href="images/example_profile_1.jpg" target="_blank">
+            <img src="images/example_profile_1.jpg" alt="ワークシート記入例1">
+          </a>
+          <div class="image-gallery-caption">【記入例 1】 プロフィールと言葉の具体化</div>
+        </div>
+        <div class="image-gallery-item">
+          <a href="images/example_profile_2.jpg" target="_blank">
+            <img src="images/example_profile_2.jpg" alt="ワークシート記入例2">
+          </a>
+          <div class="image-gallery-caption">【記入例 2】 全体のレイアウトとアバター貼り付け位置</div>
+        </div>
+      </div>
       
       <p style="margin-top: .8rem;">考えた紹介テキストを、<strong>ワークシートの「【ミッション1】プロフィールカードの原案作成」欄に記入</strong>します。</p>
 
@@ -275,7 +322,7 @@
     <div class="phase">
       <div class="phase-head">
         <span class="time-badge">25–50分</span>
-        <h3>② Canva によるアバター画像生成 <span style="background: #e11d48; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-left: 6px;">ワークシート 1 に貼付</span></h3>
+        <h3>② Canva によるアバター画像生成</h3>
       </div>
       <p>Canvaにログインし、「マジック生成（画像生成AI）」機能を使って、自分のプロフィールテキストや好みのイメージに合った「オリジナルアバター画像」を作成します。</p>
 
@@ -294,7 +341,7 @@
       </div>
       <ul>
         <li><strong>マジック生成のプロンプト例：</strong> 「サイバーパンク風の猫の戦士、デジタルイラスト、青い炎をまとっている」など、なりたいアバター像を言葉で指示します。</li>
-        <li>生成されたお気に入りの画像1枚をiPadに保存し、<strong>ワークシートの指定欄（Canvaで画像生成したアバター画像をここに貼る）に貼り付け</strong>ます。</li>
+        <li>生成されたお気に入りの画像1枚をiPadの写真ライブラリに保存しておきます。<strong>（※今回はワークシートには貼り付けません。iPad内に大切に保管してください）</strong></li>
       </ul>
       <div class="timer-row">
         <button class="timer-btn" data-min="25">▶ 25分タイマー</button>
