@@ -499,7 +499,7 @@
     <div class="phase">
       <div class="phase-head">
         <span class="time-badge">0–20分</span>
-        <h3>① 言葉のリライト（超進化）とGemini壁打ち <span style="background: #e11d48; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-left: 6px;">ワークシート 3 に記入</span></h3>
+        <h3>① 言葉のリライト（超進化）とGemini壁打ち</h3>
       </div>
       <p>第2回バトルは、同じチーム以外の「別のチームのメンバー」と対戦します。まずはチーム内で、お互いのプロフィールカードをさらなる最強カードへと超進化（ブラッシュアップ）させる作戦会議をしましょう。</p>
       
@@ -516,12 +516,21 @@
           <ul style="margin: 0; padding-left: 1.2rem; list-style-type: circle;">
             <li>「音楽が好き」 ➔ <strong>「どんなときに、どんなジャンルを聴くのか？そのときの自分の気持ちは？」</strong> （具体化）</li>
             <li>アバター説明： ➔ <strong>「どんなチャーム（アクセサリー）をつけ、手に何のアイテム（武器）を持たせるか？」</strong> を言葉で足す（戦闘力アップ）</li>
-            <li>「Why?」の問い： ➔ <strong>「 clear（1年生が言い直せるか）/ focused（夏休みに学校で実験できるか）/ arguable（主張や仮説があるか）」</strong> の視点で問いを絞り込む。</li>
+            <li>「Why?」の問い： ➔ <strong>「 clear（他の人が言い直せるか）/ focused（人類が今の文明レベルで実証可能か）/ arguable（主張や仮説があるか）」</strong> の視点で問いを絞り込む。</li>
           </ul>
         </div>
       </div>
 
-      <p>通常の<strong>「Gemini」</strong>を起動し、自分の紹介テキストを貼り付けて「もっと具体的にするには、どんな質問に答えればいい？」などと対話し、言葉をブラッシュアップしてください。</p>
+      <p>通常の<strong>「Gemini」</strong>を起動し、自分の紹介テキストを貼り付けて対話し、言葉をブラッシュアップしてください。</p>
+
+      <!-- 💬 Gemini壁打ち用のヒントプロンプトカード -->
+      <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; margin: 10px 0; padding: 12px; font-size: 0.8rem; line-height: 1.5; color: #334155;">
+        <strong style="color: #475569; display: block; margin-bottom: 6px;">💡 Geminiにそのまま送れる「壁打ち用プロンプト例」（コピペして使おう）</strong>
+        <code id="prompt-wall-chat" style="display: block; background: #ffffff; padding: 8px; border-radius: 4px; border: 1px solid #e2e8f0; font-family: monospace; white-space: pre-wrap; margin-bottom: 6px; text-align: left;">私は総合的な探究の時間で、次のプロフィールと言葉を考えています。
+【ここに自分の紹介文や問いを貼り付ける】
+この言葉をより「具体的」にしたいです。また、私の問いが「他の人が言い直せるか（clear）」、「人類が今の文明レベルで実証可能か（focused）」の基準をクリアできるように、私にどんな質問を投げかけてくれれば良いですか？私の言葉を深めるための質問を3つ考えて、順番に投げかけてください。</code>
+        <button class="copy-btn" style="background: #475569; color: white; font-size: 0.72rem; padding: 3px 8px;" onclick="navigator.clipboard.writeText(document.getElementById('prompt-wall-chat').innerText); alert('壁打ちプロンプトをコピーしました！あとはGeminiに貼り付けて、自分の紹介文を差し替えて送ろう！')">📋 壁打ちプロンプトをコピーする</button>
+      </div>
 
       <!-- Geminiリンクボタン -->
       <div style="text-align: center; margin: 1rem 0;">
