@@ -451,17 +451,25 @@
     <div class="phase">
       <div class="phase-head">
         <span class="time-badge">20–50分</span>
-        <h3>③ Gemini による第1回アバターバトル <span style="background: #e11d48; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-left: 6px;">ワークシート 2 に記入</span></h3>
+        <h3>③ GEM（ジェム）による第1回アバターバトル <span style="background: #e11d48; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-left: 6px;">ワークシート 2 に記入</span></h3>
       </div>
-      <p>各自のiPadでGeminiを起動し、<strong>「道具箱」タブから【バトル実況プロンプト】をコピー</strong>して送信します。その後、自分たちのプロフィールテキストとアバター画像を送信して対戦（リハーサル）を開始します。</p>
+      <p>先生から提供された専用の<strong>「アバターバトルGEM（ジェム）」</strong>を起動し、作成したカードを送信して戦闘を開始します。（コピペは不要です）</p>
       
-      <div class="prompt-card">
-        <div class="prompt-title">バトル進行手順</div>
-        <ol style="font-size: 0.85rem; color: #1e293b; padding-left: 1.2rem; margin: 0;">
-          <li>Geminiに「道具箱」にあるバトル実況プロンプトを送信する。</li>
-          <li>続いて、自分のプロフィール言葉とアバター画像を送信する。</li>
-          <li>Geminiから返ってくる実況テキストを読み、勝敗やAIがどの言葉に反応したかを確認します。</li>
+      <div class="prompt-card" style="border-left-color: #0ea5e9; background: #f0f9ff;">
+        <div class="prompt-title" style="background: #0ea5e9; color: white;">🎮 バトル進行手順</div>
+        <ol style="font-size: 0.85rem; color: #0369a1; padding-left: 1.2rem; margin: 0; line-height: 1.6;">
+          <li>先生の指示に従い、配布された「アバターバトルGEM」を開く。</li>
+          <li><strong>「手書きのプロフィールカード」</strong>と<strong>「Canvaアバター画像が貼られたワークシート」</strong>の2枚を机の上に並べる。</li>
+          <li>iPadのカメラで<strong>2枚が1枚に収まるように写真を撮影</strong>し、GEMに添付する。</li>
+          <li>写真と一緒に、下記の<strong>【対戦開始メッセージ】</strong>を入力して送信する。</li>
         </ol>
+      </div>
+
+      <!-- 送信用メッセージの提示 -->
+      <div style="background: #faf8f4; border: 1.5px solid #d97706; border-radius: 8px; margin: 12px 0; padding: 12px; font-size: 0.82rem;">
+        <strong style="color: #b45309;">💬 送信するメッセージ（コピペ用）</strong>
+        <code id="prompt-send-battle" style="display: block; background: #ffffff; padding: 6px; border-radius: 4px; margin-top: 6px; font-family: monospace; border: 1px solid #fde68a;">添付した写真のプロフィールとアバター画像で対戦（第1回バトル）を開始してください。対戦相手を自動で呼び出して実況をお願いします！</code>
+        <button class="copy-btn" style="background: #d97706; color: white; font-size: 0.75rem; margin-top: 6px; padding: 4px 10px;" onclick="navigator.clipboard.writeText(document.getElementById('prompt-send-battle').innerText); alert('コピーしました！')">📋 メッセージをコピーする</button>
       </div>
 
       <p style="margin-top: .8rem;">対戦アバター名、勝敗、そしてAIの反応メモ（どの言葉に強く反応したか、何が足りなかったか）を、<strong>ワークシートの「第1回バトル 対戦表（Table 2）」に記入</strong>します。</p>
@@ -489,8 +497,15 @@
       <p>1回目の対戦結果で「足りなかった表現」や「AIに誤解された部分」を補うため、プロフィールテキストをより「具体的」に書き直し、最強カードへ超進化（リライト）させます。</p>
       <ul>
         <li><strong>超進化（リライト）のコツ：</strong> 性格や特徴を具体的なエピソード（〜のときに〇〇する等）に置き換える。数値を入れる。アバターの武器や必殺技の仕組みをより論理的に説明する。</li>
-        <li>リライト後のテキストと画像でGeminiと再び対戦し、AIの反応や戦闘ステータスがどう変化したか比較します。</li>
+        <li>書き直したプロフィールカードとアバター画像を再び2枚並べて写真を撮り、GEMに送信して再戦（第2回バトル）を開始します。</li>
       </ul>
+      
+      <!-- 送信用メッセージの提示 -->
+      <div style="background: #faf8f4; border: 1.5px solid #d97706; border-radius: 8px; margin: 12px 0; padding: 12px; font-size: 0.82rem;">
+        <strong style="color: #b45309;">💬 リライト送信時のメッセージ（コピペ用）</strong>
+        <code id="prompt-send-rewrite" style="display: block; background: #ffffff; padding: 6px; border-radius: 4px; margin-top: 6px; font-family: monospace; border: 1px solid #fde68a;">プロフィールをより具体的にリライト（超進化）させました。添付の写真をもとに、第2回バトルを開始してください！</code>
+        <button class="copy-btn" style="background: #d97706; color: white; font-size: 0.75rem; margin-top: 6px; padding: 4px 10px;" onclick="navigator.clipboard.writeText(document.getElementById('prompt-send-rewrite').innerText); alert('コピーしました！')">📋 メッセージをコピーする</button>
+      </div>
       <p style="margin-top: .8rem;">対戦結果と、言葉を変えたことでステータスや反応がどう上がったかを、<strong>ワークシートの「第2回バトル 対戦表」に記入</strong>します。</p>
       <div class="timer-row">
         <button class="timer-btn" data-min="30">▶ 30分タイマー</button>
@@ -524,8 +539,8 @@
     </div>
 
     <div class="phase">
-      <h3>1. 【重要】バトル実況ルール（2時間目・3時間目開始時に送信）</h3>
-      <p style="font-size: .85rem; color: var(--sub); margin-bottom: .5rem;">※このルールを最初に送って、Geminiにバトルシステムを読み込ませてください。</p>
+      <h3>1. 【教員用】アバターバトル専用GEM作成用プロンプト（GEM定義用）</h3>
+      <p style="font-size: .85rem; color: var(--sub); margin-bottom: .5rem;">※先生が専用の「バトルGEM（ジェム）」を構築する際に、GEMの『指示文（System Instructions）』欄にコピーしてご使用ください。</p>
       <div class="prompt-card">
         <div class="prompt-title">コピー用プロンプト（バトル実況ルール）</div>
         <code id="prompt-battle-rule" style="white-space: pre-wrap; font-family: monospace; display: block; max-height: 300px; overflow-y: auto; text-align: left;">あなたは『世界一熱狂的なカードバトルゲームマスター ＆ 実況アナウンサー』です。
