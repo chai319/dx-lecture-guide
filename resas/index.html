@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RESAS探偵：授業進行サイト</title>
+<style>
+  :root {
+    --accent: #1f6f5c;
+    --accent-hover: #175647;
+    --accent-light: #eef7f4;
+    --bg: #fafaf5;
+    --card-bg: #ffffff;
+    --text: #222222;
+    --text-muted: #555555;
+    --border: #e0e0e0;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Meiryo", sans-serif;
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  header {
+    background: var(--accent);
+    color: #ffffff;
+    padding: 22px 16px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  header h1 {
+    margin: 0 0 6px;
+    font-size: 1.4rem;
+    letter-spacing: 0.02em;
+  }
+  header p {
+    margin: 0;
+    font-size: 0.85rem;
+    opacity: 0.9;
+  }
+
+  nav.tabs {
+    display: flex;
+    justify-content: center;
+    background: var(--card-bg);
+    border-bottom: 2px solid #e8e8e8;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  nav.tabs button {
+    flex: 1;
+    max-width: 210px;
+    padding: 13px 8px;
+    border: none;
+    background: none;
+    font-size: 0.96rem;
+    font-weight: bold;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  nav.tabs button:hover {
+    color: var(--accent);
+    background: var(--accent-light);
+  }
+  nav.tabs button.active {
+    border-bottom: 3px solid var(--accent);
+    color: var(--accent);
+    background: #ffffff;
+  }
+
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 24px 16px 40px;
+  }
+  .panel { display: none; }
+  .panel.active { display: block; animation: fadeIn 0.25s ease-out; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  h2 {
+    border-left: 6px solid var(--accent);
+    padding-left: 12px;
+    margin: 0 0 16px;
+    font-size: 1.25rem;
+    color: var(--accent);
+  }
+  h3 {
+    font-size: 1.05rem;
+    margin: 22px 0 10px;
+    color: #333333;
+    border-bottom: 1.5px solid #eee;
+    padding-bottom: 4px;
+  }
+
+  .step-list {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px 16px 36px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .step-list li {
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+  }
+  .step-list li:last-child { margin-bottom: 0; }
+
+  table.timeline {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 24px;
+    font-size: 0.9rem;
+    background: var(--card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  table.timeline th, table.timeline td {
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    text-align: left;
+    vertical-align: top;
+  }
+  table.timeline th {
+    background: var(--accent-light);
+    color: var(--accent);
+    font-weight: bold;
+  }
+  table.timeline td.time-col {
+    font-weight: bold;
+    white-space: nowrap;
+    color: #555;
+  }
+
+  .link-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 12px;
+    margin: 14px 0 24px;
+  }
+  .link-card {
+    display: flex;
+    align-items: center;
+    background: var(--card-bg);
+    border: 1.5px solid var(--accent);
+    border-radius: 10px;
+    padding: 14px 18px;
+    text-decoration: none;
+    color: var(--accent);
+    font-weight: bold;
+    box-shadow: var(--shadow);
+    transition: all 0.2s ease;
+  }
+  .link-card:hover {
+    background: var(--accent);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(31, 111, 92, 0.25);
+  }
+  .link-card .icon {
+    font-size: 1.3rem;
+    margin-right: 10px;
+  }
+
+  .caution {
+    background: #fff9e6;
+    border: 1.5px solid #ebd488;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 0.88rem;
+    margin-bottom: 16px;
+    color: #554400;
+    line-height: 1.55;
+  }
+  .caution strong {
+    color: #332200;
+  }
+
+  .video-slot {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    margin: 20px 0;
+    box-shadow: var(--shadow);
+  }
+  .video-slot iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #000000;
+  }
+  .video-config {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .video-config input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.88rem;
+  }
+  .video-config button {
+    padding: 8px 18px;
+    border: none;
+    background: var(--accent);
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .video-config button:hover {
+    background: var(--accent-hover);
+  }
+  .video-error {
+    color: #c0392b;
+    font-size: 0.82rem;
+    margin: 6px 0 0;
+    font-weight: bold;
+  }
+  .video-error.hidden { display: none; }
+
+  .prompt-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+  .prompt-box h3 {
+    margin-top: 0;
+    border: none;
+    padding: 0 0 6px;
+    color: var(--accent);
+  }
+  .prompt-box textarea {
+    width: 100%;
+    height: 180px;
+    font-family: Menlo, Monaco, Consolas, monospace;
+    font-size: 0.82rem;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px;
+    background: #fdfdfd;
+    line-height: 1.5;
+  }
+  .prompt-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
+  .copy-btn {
+    padding: 8px 20px;
+    border: none;
+    background: var(--accent);
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.88rem;
+    transition: all 0.2s ease;
+  }
+  .copy-btn:hover {
+    background: var(--accent-hover);
+  }
+  .copy-btn.copied {
+    background: #2e8b57;
+  }
+  .copy-btn.failed {
+    background: #c0392b;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>RESAS探偵：授業進行サイト</h1>
+  <p>桃鉄教育版 × 地域経済分析システム（RESAS）データサイエンス探究</p>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="hour1">1時間目</button>
+  <button class="tab-btn" data-tab="hour2_1">2時間目その１</button>
+  <button class="tab-btn" data-tab="hour2_2">2時間目その２</button>
+  <button class="tab-btn" data-tab="other">その他</button>
+</nav>
+
+<main>
+
+  <!-- ==================== 1時間目タブ ==================== -->
+  <section id="hour1" class="panel active">
+    <h2>1時間目：桃鉄プレイ ＆ 物件スクショ収集</h2>
+    <ol class="step-list">
+      <li>桃鉄教育版を班でプレイし、各自が訪れた停車駅（街）を確定する。</li>
+      <li>各駅に停車したら、駅の<strong>「物件一覧画面」</strong>を開く。</li>
+      <li>物件一覧のスクリーンショットを保存する（捜査員ごとに1枚以上）。</li>
+      <li>2時間目のロイロ共有ノートへ貼り付けられるよう、画像を整理・準備しておく。</li>
+    </ol>
+
+    <div class="video-slot">
+      <iframe id="videoFrame" title="解説動画（1時間目）" sandbox="allow-scripts allow-same-origin allow-presentation" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      <div class="video-config">
+        <input id="videoUrlInput" type="text" placeholder="動画URL、またはYouTubeの埋め込みiframeタグを貼り付け（教員設定用）">
+        <button id="videoSetBtn">動画をセット</button>
+      </div>
+      <p id="videoError" class="video-error hidden"></p>
+    </div>
+  </section>
+
+  <!-- ==================== 2時間目その１タブ ==================== -->
+  <section id="hour2_1" class="panel">
+    <h2>2時間目その１：基礎訓練（4都市の総人口推移比較）</h2>
+    
+    <table class="timeline">
+      <thead>
+        <tr><th>時間</th><th>フェーズ</th><th>内容・活動ステップ</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="time-col">00–05分</td>
+          <td>導入・準備</td>
+          <td>班長のロイロ共有ノートに入室。「事実」と「仮説」の厳格な分離ルールを確認。</td>
+        </tr>
+        <tr>
+          <td class="time-col">05–20分</td>
+          <td>Mission 1（基礎訓練）</td>
+          <td><strong>4都市の総人口推移比較</strong>：各自の街の人口グラフをCard-01に貼り、事実と仮説を記入してAI教官の評価を受ける。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="video-slot">
+      <iframe id="videoFrameHour2Part1" title="解説動画（2時間目その１）" sandbox="allow-scripts allow-same-origin allow-presentation" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      <div class="video-config">
+        <input id="videoUrlInputHour2Part1" type="text" placeholder="動画URL、またはYouTubeの埋め込みiframeタグを貼り付け（教員設定用）">
+        <button id="videoSetBtnHour2Part1">動画をセット</button>
+      </div>
+      <p id="videoErrorHour2Part1" class="video-error hidden"></p>
+    </div>
+
+    <h3>捜査・批評ツール</h3>
+    <div class="link-card-grid">
+      <a class="link-card" href="https://resas.go.jp/" target="_blank" rel="noopener">
+        <span class="icon">📊</span>
+        <span>RESAS 地域経済分析システム（公式トップ）</span>
+      </a>
+      <a class="link-card" href="https://gemini.google.com/" target="_blank" rel="noopener">
+        <span class="icon">✨</span>
+        <span>批評役 Gemini を開く（外部サイト）</span>
+      </a>
+    </div>
+
+    <div class="caution">
+      <strong>【AI教官の使い方（スクショ添付型）】</strong><br>
+      ① ロイロノートで記入したカード（Card-01）をタップして<strong>全画面表示</strong>にし、スクリーンショットを撮る。<br>
+      ② 下の「プロンプトをコピー」ボタンを押す。<br>
+      ③ <strong>批評役 Gemini</strong> を開き、画像を貼り付け（Ctrl+V / 添付）＋ コピーしたプロンプトを貼り付けて送信！<br>
+      ※個人情報保護のため、カードには生徒の実名ではなく「捜査員A」などの記号だけを記入してください。
+    </div>
+
+    <div class="prompt-box">
+      <h3>Mission 1用：AI教官プロンプト（人口推移編・スクショ添付用）</h3>
+      <textarea id="prompt1" readonly>あなたは「データ探偵学校」の敏腕教官です。
+生徒（新人探偵チーム）から提出された【添付の捜査カード（Card-01）の画像】を読み取り、探偵教官として次の3つのフィードバックを簡潔に返してください。
+
+【出力ルール】
+1. 【証拠の評価】：グラフから読み取った「事実」が正確に捉えられているかを褒める。
+2. 【推測の境界線チェック】：生徒が書いた「仮説」が、人口推移グラフだけから言える範囲を超えて決めつけていないかを区別してあげる（「良い着眼点だが、このグラフだけではまだ断定できないぞ」と指摘）。
+3. 【次なる捜査ヒント】：その仮説を確かめるために、「次にRESASで調べるべきデータ画面や指標」（例：年齢別人口、転入転出、産業構造など）を1つ具体的に授ける。
+
+口調：厳しくも温かい探偵教官スタイル（250〜300字程度）。</textarea>
+      <div class="prompt-actions">
+        <button class="copy-btn" data-target="prompt1">プロンプトをコピー</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 2時間目その２タブ ==================== -->
+  <section id="hour2_2" class="panel">
+    <h2>2時間目その２：本番捜査（ルーレット事件簿・産業編 ＆ 振り返り）</h2>
+    
+    <table class="timeline">
+      <thead>
+        <tr><th>時間</th><th>フェーズ</th><th>内容・活動ステップ</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="time-col">20–42分</td>
+          <td>Mission 2（本番捜査）</td>
+          <td><strong>ルーレット事件簿（産業編）</strong>：ルーレットで班共通テーマを決定。物件の印象と実際の統計データを突合し、AI教官のツッコミを受けて説明を修正。</td>
+        </tr>
+        <tr>
+          <td class="time-col">42–50分</td>
+          <td>振り返り</td>
+          <td><strong>Card-03（個人振り返りカード）</strong>を各自提出。データの前後での考えの変容を言語化。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="video-slot">
+      <iframe id="videoFrameHour2Part2" title="解説動画（2時間目その２）" sandbox="allow-scripts allow-same-origin allow-presentation" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      <div class="video-config">
+        <input id="videoUrlInputHour2Part2" type="text" placeholder="動画URL、またはYouTubeの埋め込みiframeタグを貼り付け（教員設定用）">
+        <button id="videoSetBtnHour2Part2">動画をセット</button>
+      </div>
+      <p id="videoErrorHour2Part2" class="video-error hidden"></p>
+    </div>
+
+    <h3>捜査ツール</h3>
+    <div class="link-card-grid">
+      <a class="link-card" href="roulette.html" target="_blank">
+        <span class="icon">🎯</span>
+        <span>RESAS探偵ルーレットを開く</span>
+      </a>
+      <a class="link-card" href="https://resas.go.jp/" target="_blank" rel="noopener">
+        <span class="icon">📊</span>
+        <span>RESAS 地域経済分析システム（公式トップ）</span>
+      </a>
+      <a class="link-card" href="https://gemini.google.com/" target="_blank" rel="noopener">
+        <span class="icon">✨</span>
+        <span>批評役 Gemini を開く（外部サイト）</span>
+      </a>
+    </div>
+
+    <div class="caution">
+      <strong>【RESAS画面遷移の手順ガイダンス】</strong><br>
+      個別分析画面の安定した公式URLは本資料の範囲では確認できていないため、公式トップページから移動してください。トップページ（<a href="https://resas.go.jp/" target="_blank" rel="noopener">https://resas.go.jp/</a>）を開いたら、対象の都道府県・市区町村を選択した上で、左上メニューから以下を選んでください：<br>
+      ・<strong>産業構造分析</strong> → 「産業構成」タブ → 従業者数（事業所単位）／事業所数を切替<br>
+      ・<strong>人口構成分析</strong> → 「人口構成」（年齢3区分）または「総人口推移」タブ<br>
+      ・<strong>宿泊者分析</strong> → 「宿泊者数の推移」タブ → 月別
+    </div>
+
+    <div class="caution">
+      <strong>【産業系テーマ（01〜09）の重要ルール】</strong><br>
+      産業構造分析では、表示年を必ず<strong>「2021年（経済センサス‐活動調査）」</strong>、市区町村・事業所単位に統一してください。RESASの初期表示（2024年 経済構造実態調査）とは調査対象や条件が異なるため、2021年に設定しないと正しい比較ができません。
+    </div>
+
+    <div class="caution">
+      <strong>【人口系テーマ（10・11）の重要ルール】</strong><br>
+      人口構成分析を使用します。テーマ10は年齢3区分の<strong>2020年実績値</strong>、テーマ11は総人口推移の<strong>2010年・2015年・2020年の3時点</strong>を、いずれも市区町村単位で揃えて読み取ってください。
+    </div>
+
+    <div class="caution">
+      <strong>【AI教官の使い方（スクショ添付型）】</strong><br>
+      ① ロイロノートで記入したカード（Card-02）をタップして<strong>全画面表示</strong>にし、スクリーンショットを撮る。<br>
+      ② 下の「プロンプトをコピー」ボタンを押す。<br>
+      ③ <strong>批評役 Gemini</strong> を開き、画像を貼り付け（Ctrl+V / 添付）＋ コピーしたプロンプトを貼り付けて送信！<br>
+      ※個人情報保護のため、カードには生徒の実名ではなく「捜査員A」などの記号だけを記入してください。
+    </div>
+
+    <div class="prompt-box">
+      <h3>Mission 2用：AI教官プロンプト（ルーレット事件簿編・スクショ添付用）</h3>
+      <textarea id="prompt2" readonly>あなたは「データ探偵学校」の敏腕教官です。
+生徒チームから提出された【添付の本番捜査カード（Card-02）の画像】を読み取り、桃鉄の物件とRESAS産業データの比較についてフィードバックしてください。
+
+【出力ルール】
+1. 【着眼点の評価】：ゲームの印象（物件・名物）と統計データ（実際の数字）のギャップに注目できている点を評価する。
+2. 【教官のツッコミ（言い過ぎ・証拠不足の指摘）】：報告の中に「データの範囲を超えて決めつけてしまっている部分」があれば鋭くツッコミを入れる（例：「従業者数が多いからといって売上まで高いとは言えないぞ」「地元客向けの店と観光客向けを混同していないか？」など）。
+3. 【ミッションクリア条件】：生徒に対して「報告書の説明をより正確にするために、一文だけ修正しなさい」と指示する。
+
+口調：探偵教官スタイル（250〜300字程度）。</textarea>
+      <div class="prompt-actions">
+        <button class="copy-btn" data-target="prompt2">プロンプトをコピー</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== その他タブ ==================== -->
+  <section id="other" class="panel">
+    <h2>その他：ツール集 ＆ 生成AI活用ガイド</h2>
+
+    <h3>捜査・批評ツール</h3>
+    <div class="link-card-grid">
+      <a class="link-card" href="roulette.html" target="_blank">
+        <span class="icon">🎯</span>
+        <span>RESAS探偵ルーレットを開く</span>
+      </a>
+      <a class="link-card" href="https://resas.go.jp/" target="_blank" rel="noopener">
+        <span class="icon">📊</span>
+        <span>RESAS 地域経済分析システム（公式トップ）</span>
+      </a>
+      <a class="link-card" href="https://gemini.google.com/" target="_blank" rel="noopener">
+        <span class="icon">✨</span>
+        <span>批評役 Gemini を開く（外部サイト）</span>
+      </a>
+    </div>
+
+    <div class="caution">
+      <strong>【生成AI活用の注意点】</strong><br>
+      生成AIは思考を深めるための壁打ち（批評役）です。個人名や生徒IDなどをプロンプトに貼り付けないでください。AIには事実確認・言い過ぎチェック・追加仮説のヒントをもらうために利用します。
+    </div>
+  </section>
+
+</main>
+
+<script>
+// タブ切り替え
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+// 動画URL抽出・埋め込み変換
+function extractUrlFromInput(raw){
+  if (!raw) return '';
+  const iframeMatch = raw.match(/<iframe[^>]*\ssrc=["']([^"']+)["']/i);
+  return iframeMatch ? iframeMatch[1] : raw;
+}
+
+function toEmbeddableUrl(rawUrl){
+  if (!rawUrl) return null;
+  let url;
+  try {
+    url = new URL(rawUrl);
+  } catch (e) {
+    return null;
+  }
+  if (url.protocol !== 'https:') return null;
+
+  const host = url.hostname.replace(/^www\./, '');
+  if (host === 'youtu.be') {
+    const id = url.pathname.slice(1).split(/[?#]/)[0];
+    return id ? `https://www.youtube.com/embed/${id}` : null;
+  }
+  if (host === 'youtube.com' || host === 'm.youtube.com') {
+    if (url.pathname === '/watch') {
+      const id = url.searchParams.get('v');
+      return id ? `https://www.youtube.com/embed/${id}` : null;
+    }
+    if (url.pathname.startsWith('/embed/')) {
+      return url.toString();
+    }
+    if (url.pathname.startsWith('/shorts/')) {
+      const id = url.pathname.split('/')[2];
+      return id ? `https://www.youtube.com/embed/${id}` : null;
+    }
+  }
+  return url.toString();
+}
+
+// 動画枠のセットアップ
+function setupVideoSlot(frameId, inputId, buttonId, errorId, storageKey, legacyKey){
+  const frame = document.getElementById(frameId);
+  const input = document.getElementById(inputId);
+  const errorEl = document.getElementById(errorId);
+
+  document.getElementById(buttonId).addEventListener('click', () => {
+    const raw = extractUrlFromInput(input.value.trim());
+    const embeddable = toEmbeddableUrl(raw);
+    if (embeddable) {
+      frame.src = embeddable;
+      try {
+        localStorage.setItem(storageKey, embeddable);
+      } catch (e) {
+        // localStorage無効環境でも動作継続
+      }
+      errorEl.textContent = '';
+      errorEl.classList.add('hidden');
+    } else {
+      errorEl.textContent = '有効なURLを読み取れませんでした。https:// から始まる動画URL、またはYouTubeの埋め込みiframeタグを入力してください。';
+      errorEl.classList.remove('hidden');
+    }
+  });
+
+  // 保存値の復元
+  let saved = null;
+  try {
+    saved = localStorage.getItem(storageKey);
+    if (!saved && legacyKey) {
+      saved = localStorage.getItem(legacyKey);
+    }
+  } catch (e) {
+    saved = null;
+  }
+  if (saved) {
+    const validSaved = toEmbeddableUrl(saved);
+    if (validSaved) {
+      frame.src = validSaved;
+      input.value = validSaved;
+    }
+  }
+}
+
+setupVideoSlot('videoFrame', 'videoUrlInput', 'videoSetBtn', 'videoError', 'resasDetectiveVideoUrl');
+setupVideoSlot('videoFrameHour2Part1', 'videoUrlInputHour2Part1', 'videoSetBtnHour2Part1', 'videoErrorHour2Part1', 'resasDetectiveVideoUrlHour2Part1');
+setupVideoSlot('videoFrameHour2Part2', 'videoUrlInputHour2Part2', 'videoSetBtnHour2Part2', 'videoErrorHour2Part2', 'resasDetectiveVideoUrlHour2Part2', 'resasDetectiveVideoUrlHour2');
+
+// クリップボードコピー
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const text = document.getElementById(btn.dataset.target).value;
+    let copied = false;
+    if (navigator.clipboard && window.isSecureContext) {
+      try {
+        await navigator.clipboard.writeText(text);
+        copied = true;
+      } catch (e) {
+        copied = false;
+      }
+    }
+    if (!copied) {
+      // フォールバック
+      try {
+        const ta = document.createElement('textarea');
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        ta.style.top = '-9999px';
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        copied = document.execCommand('copy');
+        document.body.removeChild(ta);
+      } catch (e) {
+        copied = false;
+      }
+    }
+    if (copied) {
+      const originalText = btn.textContent;
+      btn.textContent = 'コピーしました！';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.classList.remove('copied');
+      }, 1800);
+    } else {
+      const originalText = btn.textContent;
+      btn.textContent = 'コピー失敗（手動で選択コピーしてください）';
+      btn.classList.add('failed');
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.classList.remove('failed');
+      }, 2500);
+    }
+  });
+});
+</script>
+</body>
+</html>

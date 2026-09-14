@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RESAS探偵ルーレット</title>
+<style>
+  :root {
+    --accent: #1f6f5c;
+    --accent-hover: #175647;
+    --accent-light: #eef7f4;
+    --bg: #f4f1e8;
+    --card-bg: #ffffff;
+    --text: #222222;
+    --text-muted: #666666;
+    --border: #dddddd;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Meiryo", sans-serif;
+    background: var(--bg);
+    margin: 0;
+    padding: 24px 16px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  header h1 {
+    margin: 0 0 6px;
+    font-size: 1.5rem;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+  header p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+  main {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .mode-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .mode-toggle button {
+    padding: 8px 18px;
+    border: 2px solid var(--accent);
+    background: var(--card-bg);
+    color: var(--accent);
+    border-radius: 24px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: all 0.2s ease;
+  }
+  .mode-toggle button.active {
+    background: var(--accent);
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(31, 111, 92, 0.3);
+  }
+  .mode-toggle button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .wheel-wrap {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    margin: 0 auto 20px;
+  }
+  .pointer {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 24px solid #c0392b;
+    z-index: 10;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
+  }
+  .wheel {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: relative;
+    border: 6px solid #ffffff;
+    box-shadow: 0 0 0 3px var(--accent), var(--shadow);
+    transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+  }
+  .label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+  }
+  .label span {
+    position: absolute;
+    left: 50px;
+    top: -10px;
+    width: 90px;
+    text-align: right;
+    font-size: 13px;
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+    transform-origin: 0 50%;
+  }
+
+  #spinBtn {
+    display: block;
+    width: 220px;
+    margin: 0 auto 20px;
+    padding: 12px 24px;
+    font-size: 1.05rem;
+    font-weight: bold;
+    background: var(--accent);
+    color: #ffffff;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(31, 111, 92, 0.3);
+    transition: all 0.2s ease;
+  }
+  #spinBtn:hover:not(:disabled) {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(31, 111, 92, 0.4);
+  }
+  #spinBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .team-panel {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .team-panel input {
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.95rem;
+    border: 1.5px solid #bbb;
+    border-radius: 6px;
+    padding: 6px 12px;
+    width: 170px;
+    color: var(--text);
+  }
+  .crew {
+    display: flex;
+    gap: 6px;
+  }
+  .crew-btn {
+    padding: 6px 12px;
+    border: 1.5px solid #aaa;
+    background: #ffffff;
+    color: #444;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: bold;
+    transition: all 0.2s ease;
+  }
+  .crew-btn.done {
+    background: var(--accent);
+    color: #ffffff;
+    border-color: var(--accent);
+    box-shadow: 0 2px 5px rgba(31, 111, 92, 0.25);
+  }
+
+  .result {
+    background: var(--card-bg);
+    border: 2px solid var(--accent);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+    animation: fadeIn 0.3s ease-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .result.hidden { display: none; }
+  .result h2 {
+    margin: 0 0 10px;
+    font-size: 1.25rem;
+    color: var(--accent);
+    border-bottom: 1.5px solid #eee;
+    padding-bottom: 6px;
+  }
+  .result-mission {
+    font-size: 0.95rem;
+    font-weight: bold;
+    margin: 0 0 14px;
+    color: #333;
+    line-height: 1.5;
+  }
+  .result dl {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 8px 12px;
+    margin: 0 0 16px;
+    font-size: 0.9rem;
+    background: #fdfcf9;
+    border: 1px solid #eee;
+    padding: 12px;
+    border-radius: 8px;
+  }
+  .result dt {
+    font-weight: bold;
+    color: var(--text-muted);
+  }
+  .result dd {
+    margin: 0;
+    color: var(--text);
+  }
+  .result-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+  #statusBtn {
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+  }
+  #statusBtn[data-status="INCOMPLETE"] {
+    background: #888888;
+    color: #ffffff;
+  }
+  #statusBtn[data-status="CLEARED"] {
+    background: #2e8b57;
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(46, 139, 87, 0.3);
+  }
+
+  .legend-title {
+    font-size: 0.95rem;
+    font-weight: bold;
+    margin: 0 0 8px;
+    color: var(--text-muted);
+  }
+  .legend {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px;
+    font-size: 0.8rem;
+    margin: 0;
+  }
+  .legend li {
+    background: var(--card-bg);
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 8px 10px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>RESAS探偵ルーレット</h1>
+  <p>ルーレットを回して、班共通の捜査テーマを決定しよう！</p>
+</header>
+<main>
+  <div class="mode-toggle">
+    <button id="modeBasic" class="active">基本4テーマ</button>
+    <button id="modeAdvanced">発展12テーマ</button>
+  </div>
+
+  <div class="wheel-wrap">
+    <div class="pointer"></div>
+    <div class="wheel" id="wheel"></div>
+  </div>
+
+  <button id="spinBtn">ルーレットを回す</button>
+
+  <div class="team-panel">
+    <input id="teamCode" value="班コード: No.01">
+    <div class="crew">
+      <button class="crew-btn" data-crew="A">捜査員A</button>
+      <button class="crew-btn" data-crew="B">捜査員B</button>
+      <button class="crew-btn" data-crew="C">捜査員C</button>
+      <button class="crew-btn" data-crew="D">捜査員D</button>
+    </div>
+  </div>
+
+  <section id="result" class="result hidden">
+    <h2 id="resultTitle"></h2>
+    <p id="resultMission" class="result-mission"></p>
+    <dl>
+      <dt>RESAS画面</dt><dd id="resultScreen"></dd>
+      <dt>捜査難易度</dt><dd id="resultStars"></dd>
+      <dt>目安時間</dt><dd id="resultTime"></dd>
+      <dt>証拠・比較条件</dt><dd id="resultEvidence"></dd>
+    </dl>
+    <div class="result-actions">
+      <button id="statusBtn" data-status="INCOMPLETE">STATUS: INCOMPLETE</button>
+    </div>
+  </section>
+
+  <div class="legend-title">テーマ一覧</div>
+  <ul id="legend" class="legend"></ul>
+</main>
+
+<script>
+const THEMES = [
+  {id:'01', name:'街の仕事の主役を探せ', mission:'物件一覧から働く人が多そうな産業を予想。実際の上位3産業は何か？', screen:'産業構造分析 → 産業構成 → 従業者数（事業所単位）→ すべての大分類（2021年）', evidence:'上位3産業のグラフ、予想との一致・相違。班で1位の産業を比べる。', stars:1, time:'10〜15分', tier:'basic'},
+  {id:'02', name:'事業所の主役を探せ', mission:'物件から事業所が多そうな産業を予想。実際の上位3産業は何か？', screen:'産業構造分析 → 産業構成 → 事業所数（事業所単位）→ すべての大分類（2021年）', evidence:'上位3産業のグラフ。事業所は店だけでなく工場・事務所等も含む。', stars:1, time:'10〜15分', tier:'basic'},
+  {id:'03', name:'工場の街という噂を追え', mission:'物件に工場があったか確認。この街では製造業が従業者数の何位か？', screen:'産業構造分析 → 産業構成 → 従業者数（事業所単位）→ 大分類「製造業」（2021年）', evidence:'製造業の人数・順位。班で順位を並べる。工場が写っていなくても調査できる。', stars:1, time:'10〜15分', tier:'basic'},
+  {id:'04', name:'観光の印象を確かめろ', mission:'飲食・宿泊の物件からの印象と、「宿泊業、飲食サービス業」の従業者数の順位は一致するか？', screen:'産業構造分析 → 産業構成 → 従業者数（事業所単位）→ 大分類「宿泊業、飲食サービス業」（2021年）', evidence:'人数・順位とスクショ。地元客向け飲食店も含むため観光客数とは呼ばない。', stars:1, time:'10〜15分', tier:'basic'},
+  {id:'05', name:'数と割合の逆転を探せ', mission:'班の街のうち、製造業で働く人数が最多の街と、全従業者に占める製造業割合が最高の街は同じか？', screen:'産業構造分析 → 産業構成 → 従業者数（事業所単位）→ 製造業の人数と構成割合（2021年）', evidence:'各自が人数・割合を一組収集。班で二つの順序を比較。逆転しなくても完了。', stars:2, time:'15〜20分', tier:'advanced'},
+  {id:'06', name:'事業所が多ければ働く人も多い？', mission:'自分の街で事業所数1位の産業は、従業者数でも1位か？', screen:'産業構造分析 → 産業構成 → 事業所数／従業者数（事業所単位）を切替、大分類を統一（2021年）', evidence:'二つのグラフ。同じ／違うを判断。理由は仮説として分ける。', stars:2, time:'15〜20分', tier:'advanced'},
+  {id:'07', name:'桃鉄に映らなかった主役', mission:'スクショに目立たなかった産業で、実際の従業者数上位3位に入るものはあるか？', screen:'産業構造分析 → 産業構成 → 従業者数（事業所単位）→ 大分類（2021年）', evidence:'上位3産業と物件の対応表。該当なしも可。保存した画面にないだけで存在しないとは言わない。', stars:2, time:'15〜20分', tier:'advanced'},
+  {id:'08', name:'ものづくりの正体を追え', mission:'製造業の中で従業者数が最も多い業種は何か？食品の物件の印象と一致するか？', screen:'産業構造分析 → 産業構成 → 従業者数（事業所単位）→ 大分類別の中分類 → 製造業（2021年）', evidence:'中分類の上位業種とグラフ。食品販売と食料品製造を混同しない。秘匿で順位不明なら保留。', stars:2, time:'15〜20分', tier:'advanced'},
+  {id:'09', name:'数が多い産業は大きな職場？', mission:'製造業と卸売業・小売業で、1事業所あたり従業者数はどちらが大きいか？', screen:'産業構造分析 → 各大分類の従業者数と事業所数（従業者数 ÷ 事業所数）（2021年）', evidence:'各産業の分子・分母・計算結果。平均であり全職場の姿ではない。ゼロや秘匿は計算しない。', stars:3, time:'20〜25分', tier:'advanced'},
+  {id:'10', name:'街の年齢構成を調べよ', mission:'15歳未満・15〜64歳・65歳以上はどんな割合か？物件から想像した街の印象と何が違うか？', screen:'人口構成分析 → 年齢3区分、2020年の実績値、市区町村', evidence:'年齢3区分の人数・割合。年齢不詳等で合計が一致しない場合は注記。客層は断定しない。', stars:2, time:'15〜20分', tier:'advanced'},
+  {id:'11', name:'人口変化の方向を追え', mission:'2010→2015年と2015→2020年で、人口はどう変化したか？同じ方向か？', screen:'人口構成分析 → 総人口推移、3時点の実績値、市区町村', evidence:'3時点の人数と増減方向。班の人数差だけで強弱を順位づけしない。原因は未解明。', stars:2, time:'15〜20分', tier:'advanced'},
+  {id:'12', name:'旅人はいつ泊まりに来る？', mission:'同一年の延べ宿泊者数が最多の月はいつか？班の街で同じか？', screen:'宿泊者分析 → 推移 → 月別（同一年・属性条件を統一）', evidence:'12か月のグラフとピーク月。延べ数であり複数泊を含む。季節イベントが原因とは断定できない。', stars:3, time:'20〜25分・事前確認必須', tier:'advanced'}
+];
+
+const wheelEl = document.getElementById('wheel');
+const legendEl = document.getElementById('legend');
+const spinBtn = document.getElementById('spinBtn');
+const resultEl = document.getElementById('result');
+const modeBasicBtn = document.getElementById('modeBasic');
+const modeAdvancedBtn = document.getElementById('modeAdvanced');
+const statusBtn = document.getElementById('statusBtn');
+
+let advancedMode = false;
+let currentRotation = 0;
+let spinning = false;
+
+function getPool(){
+  return advancedMode ? THEMES : THEMES.filter(t => t.tier === 'basic');
+}
+
+function buildWheel(){
+  const pool = getPool();
+  const n = pool.length;
+  const segAngle = 360 / n;
+  const stops = pool.map((t, i) => {
+    const hue = Math.round(i * (360 / n));
+    return `hsl(${hue},65%,50%) ${i*segAngle}deg ${(i+1)*segAngle}deg`;
+  });
+  wheelEl.style.background = `conic-gradient(${stops.join(',')})`;
+
+  wheelEl.querySelectorAll('.label').forEach(el => el.remove());
+  pool.forEach((t, i) => {
+    const center = i * segAngle + segAngle / 2 - 90;
+    const label = document.createElement('div');
+    label.className = 'label';
+    label.style.transform = `rotate(${center}deg)`;
+    const span = document.createElement('span');
+    span.textContent = t.id;
+    label.appendChild(span);
+    wheelEl.appendChild(label);
+  });
+
+  legendEl.innerHTML = pool.map(t => `<li><strong>${t.id}</strong>: ${t.name}</li>`).join('');
+
+  wheelEl.style.transition = 'none';
+  wheelEl.style.transform = 'rotate(0deg)';
+  wheelEl.offsetHeight; // リフロー強制
+  wheelEl.style.transition = '';
+  currentRotation = 0;
+  resultEl.classList.add('hidden');
+}
+
+function setMode(isAdvanced){
+  if (spinning) return;
+  advancedMode = isAdvanced;
+  modeBasicBtn.classList.toggle('active', !isAdvanced);
+  modeAdvancedBtn.classList.toggle('active', isAdvanced);
+  buildWheel();
+}
+
+function showResult(theme){
+  document.getElementById('resultTitle').textContent = `事件ID ${theme.id}：${theme.name}`;
+  document.getElementById('resultMission').textContent = theme.mission;
+  document.getElementById('resultScreen').textContent = theme.screen;
+  document.getElementById('resultStars').textContent = '★'.repeat(theme.stars);
+  document.getElementById('resultTime').textContent = theme.time;
+  document.getElementById('resultEvidence').textContent = theme.evidence;
+  statusBtn.dataset.status = 'INCOMPLETE';
+  statusBtn.textContent = 'STATUS: INCOMPLETE';
+  resultEl.classList.remove('hidden');
+}
+
+function spin(){
+  if (spinning) return;
+  resultEl.classList.add('hidden'); // スピン開始時に直ちに前回の結果を非表示化
+  spinning = true;
+  spinBtn.disabled = true;
+  modeBasicBtn.disabled = true;
+  modeAdvancedBtn.disabled = true;
+
+  const pool = getPool();
+  const n = pool.length;
+  const segAngle = 360 / n;
+  const targetIndex = Math.floor(Math.random() * n);
+  const center = targetIndex * segAngle + segAngle / 2;
+  const R = (360 - center) % 360;
+  const extraSpins = 6;
+  const base = currentRotation - (currentRotation % 360);
+  const newRotation = base + 360 * extraSpins + R;
+  currentRotation = newRotation;
+  wheelEl.style.transform = `rotate(${newRotation}deg)`;
+
+  setTimeout(() => {
+    spinning = false;
+    spinBtn.disabled = false;
+    modeBasicBtn.disabled = false;
+    modeAdvancedBtn.disabled = false;
+    showResult(pool[targetIndex]);
+  }, 4100);
+}
+
+modeBasicBtn.addEventListener('click', () => setMode(false));
+modeAdvancedBtn.addEventListener('click', () => setMode(true));
+spinBtn.addEventListener('click', spin);
+
+document.querySelectorAll('.crew-btn').forEach(btn => {
+  btn.addEventListener('click', () => btn.classList.toggle('done'));
+});
+
+statusBtn.addEventListener('click', () => {
+  const cleared = statusBtn.dataset.status === 'CLEARED';
+  statusBtn.dataset.status = cleared ? 'INCOMPLETE' : 'CLEARED';
+  statusBtn.textContent = `STATUS: ${statusBtn.dataset.status}`;
+});
+
+buildWheel();
+</script>
+</body>
+</html>
