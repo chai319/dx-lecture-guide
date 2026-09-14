@@ -356,6 +356,39 @@
   .loilo-step-box.highlight .loilo-step-val {
     color: #1d4ed8;
   }
+
+  .loilo-screens-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+    margin-top: 14px;
+  }
+  .loilo-screen-card {
+    background: #f8fafc;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .loilo-screen-card .screen-caption {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .loilo-screenshot {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    background: #ffffff;
+    display: block;
+  }
 </style>
 </head>
 <body>
@@ -424,7 +457,16 @@
       </tbody>
     </table>
 
-    <!-- ロイロノート入室ステップ案内 -->
+    <div class="video-slot">
+      <iframe id="videoFrameHour2Part1" title="解説動画（2時間目その１）" sandbox="allow-scripts allow-same-origin allow-presentation" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      <div class="video-config">
+        <input id="videoUrlInputHour2Part1" type="text" placeholder="動画URL、またはYouTubeの埋め込みiframeタグを貼り付け（教員設定用）">
+        <button id="videoSetBtnHour2Part1">動画をセット</button>
+      </div>
+      <p id="videoErrorHour2Part1" class="video-error hidden"></p>
+    </div>
+
+    <!-- ロイロノート入室ステップ案内（実際の画面スクショ付き） -->
     <div class="loilo-access-card">
       <div class="loilo-access-header">
         <span>📲</span>
@@ -452,18 +494,26 @@
           <div class="loilo-step-val">DXデータサイエンス入門20260916</div>
         </div>
       </div>
-      <p style="margin: 10px 0 0; font-size: 0.83rem; color: #475569; font-weight: 600;">
+
+      <!-- 実際の画面スクリーンショット -->
+      <div class="loilo-screens-grid">
+        <div class="loilo-screen-card">
+          <div class="screen-caption">
+            <span>🔍 画面①：クラス「高１全体（2026）」＞ 授業「DX総合的な探究（2026K1）」を選択</span>
+          </div>
+          <img src="assets/loilo_step1.png" alt="クラス・授業選択画面" class="loilo-screenshot">
+        </div>
+        <div class="loilo-screen-card">
+          <div class="screen-caption">
+            <span>📂 画面②：「共有ノート」タブから「DXデータサイエンス入門20260916」を開く</span>
+          </div>
+          <img src="assets/loilo_step2.png" alt="共有ノート選択画面" class="loilo-screenshot">
+        </div>
+      </div>
+
+      <p style="margin: 12px 0 0; font-size: 0.83rem; color: #475569; font-weight: 600;">
         ※共有ノートに入ったら、各自の班のカード（Card-01）を開いて捜査を始めてください。
       </p>
-    </div>
-
-    <div class="video-slot">
-      <iframe id="videoFrameHour2Part1" title="解説動画（2時間目その１）" sandbox="allow-scripts allow-same-origin allow-presentation" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-      <div class="video-config">
-        <input id="videoUrlInputHour2Part1" type="text" placeholder="動画URL、またはYouTubeの埋め込みiframeタグを貼り付け（教員設定用）">
-        <button id="videoSetBtnHour2Part1">動画をセット</button>
-      </div>
-      <p id="videoErrorHour2Part1" class="video-error hidden"></p>
     </div>
 
     <h3>捜査・批評ツール</h3>
