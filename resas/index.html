@@ -286,6 +286,76 @@
   .copy-btn.failed {
     background: #c0392b;
   }
+
+  /* ロイロノート入室ステップガイド */
+  .loilo-access-card {
+    background: #ffffff;
+    border: 2px solid #0284c7;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 16px 0 20px;
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.08);
+  }
+  .loilo-access-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.02rem;
+    font-weight: 800;
+    color: #0369a1;
+    margin-bottom: 12px;
+    border-bottom: 1.5px solid #e0f2fe;
+    padding-bottom: 6px;
+  }
+  .loilo-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 10px;
+    align-items: stretch;
+  }
+  .loilo-step-box {
+    background: #f8fafc;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .loilo-step-box.highlight {
+    background: #eff6ff;
+    border-color: #2563eb;
+    border-width: 2px;
+  }
+  .loilo-step-num {
+    display: inline-block;
+    background: #0284c7;
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-bottom: 4px;
+    align-self: flex-start;
+  }
+  .loilo-step-box.highlight .loilo-step-num {
+    background: #2563eb;
+  }
+  .loilo-step-label {
+    font-size: 0.78rem;
+    color: #64748b;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .loilo-step-val {
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: #0f172a;
+    word-break: break-all;
+  }
+  .loilo-step-box.highlight .loilo-step-val {
+    color: #1d4ed8;
+  }
 </style>
 </head>
 <body>
@@ -344,7 +414,7 @@
         <tr>
           <td class="time-col">00–05分</td>
           <td>導入・準備</td>
-          <td>班長のロイロ共有ノートに入室。「事実」と「仮説」の厳格な分離ルールを確認。</td>
+          <td>ロイロ共有ノート<strong>「DXデータサイエンス入門20260916」</strong>に入室。「事実」と「仮説」の厳格な分離ルールを確認。</td>
         </tr>
         <tr>
           <td class="time-col">05–20分</td>
@@ -353,6 +423,39 @@
         </tr>
       </tbody>
     </table>
+
+    <!-- ロイロノート入室ステップ案内 -->
+    <div class="loilo-access-card">
+      <div class="loilo-access-header">
+        <span>📲</span>
+        <span>【授業開始】ロイロノート共有ノートへの入り方（00〜05分）</span>
+      </div>
+      <div class="loilo-steps-grid">
+        <div class="loilo-step-box">
+          <span class="loilo-step-num">STEP 1</span>
+          <div class="loilo-step-label">クラスを選択</div>
+          <div class="loilo-step-val">高１全体（2026）</div>
+        </div>
+        <div class="loilo-step-box">
+          <span class="loilo-step-num">STEP 2</span>
+          <div class="loilo-step-label">授業を選択</div>
+          <div class="loilo-step-val">DX総合的な探究（2026K1）</div>
+        </div>
+        <div class="loilo-step-box">
+          <span class="loilo-step-num">STEP 3</span>
+          <div class="loilo-step-label">画面上部のタブ</div>
+          <div class="loilo-step-val">「共有ノート」をタップ</div>
+        </div>
+        <div class="loilo-step-box highlight">
+          <span class="loilo-step-num">STEP 4</span>
+          <div class="loilo-step-label">入室する共有ノート</div>
+          <div class="loilo-step-val">DXデータサイエンス入門20260916</div>
+        </div>
+      </div>
+      <p style="margin: 10px 0 0; font-size: 0.83rem; color: #475569; font-weight: 600;">
+        ※共有ノートに入ったら、各自の班のカード（Card-01）を開いて捜査を始めてください。
+      </p>
+    </div>
 
     <div class="video-slot">
       <iframe id="videoFrameHour2Part1" title="解説動画（2時間目その１）" sandbox="allow-scripts allow-same-origin allow-presentation" referrerpolicy="strict-origin-when-cross-origin"></iframe>
