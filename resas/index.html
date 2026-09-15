@@ -195,6 +195,14 @@
     margin: 20px 0;
     box-shadow: var(--shadow);
   }
+  .video-header {
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
   .video-slot iframe {
     width: 100%;
     aspect-ratio: 16 / 9;
@@ -202,38 +210,6 @@
     border-radius: 6px;
     background: #000000;
   }
-  .video-config {
-    display: flex;
-    gap: 8px;
-    margin-top: 10px;
-  }
-  .video-config input {
-    flex: 1;
-    padding: 8px 12px;
-    border: 1.5px solid var(--border);
-    border-radius: 6px;
-    font-size: 0.88rem;
-  }
-  .video-config button {
-    padding: 8px 18px;
-    border: none;
-    background: var(--accent);
-    color: #ffffff;
-    font-weight: bold;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  .video-config button:hover {
-    background: var(--accent-hover);
-  }
-  .video-error {
-    color: #c0392b;
-    font-size: 0.82rem;
-    margin: 6px 0 0;
-    font-weight: bold;
-  }
-  .video-error.hidden { display: none; }
 
   .prompt-box {
     background: var(--card-bg);
@@ -418,12 +394,10 @@
     </ol>
 
     <div class="video-slot">
-      <iframe id="videoFrame" title="解説動画（1時間目）" sandbox="allow-scripts allow-same-origin allow-presentation" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-      <div class="video-config">
-        <input id="videoUrlInput" type="text" placeholder="動画URL、またはYouTubeの埋め込みiframeタグを貼り付け（教員設定用）">
-        <button id="videoSetBtn">動画をセット</button>
+      <div class="video-header">
+        <span>🎬</span> 1時間目 解説動画
       </div>
-      <p id="videoError" class="video-error hidden"></p>
+      <iframe id="videoFrame" src="https://www.youtube.com/embed/R1Fy86lBZbo" title="解説動画（1時間目）" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
     </div>
 
     <h3>プレイ環境・リンク</h3>
@@ -458,12 +432,10 @@
     </table>
 
     <div class="video-slot">
-      <iframe id="videoFrameHour2Part1" title="解説動画（2時間目その１）" sandbox="allow-scripts allow-same-origin allow-presentation" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-      <div class="video-config">
-        <input id="videoUrlInputHour2Part1" type="text" placeholder="動画URL、またはYouTubeの埋め込みiframeタグを貼り付け（教員設定用）">
-        <button id="videoSetBtnHour2Part1">動画をセット</button>
+      <div class="video-header">
+        <span>🎬</span> 2時間目その１ 解説動画（基礎訓練：4都市の総人口推移比較）
       </div>
-      <p id="videoErrorHour2Part1" class="video-error hidden"></p>
+      <iframe id="videoFrameHour2Part1" src="https://www.youtube.com/embed/3MqCjOzr2n8" title="解説動画（2時間目その１）" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
     </div>
 
     <!-- ロイロノート入室ステップ案内（実際の画面スクショ付き） -->
@@ -576,12 +548,10 @@
     </table>
 
     <div class="video-slot">
-      <iframe id="videoFrameHour2Part2" title="解説動画（2時間目その２）" sandbox="allow-scripts allow-same-origin allow-presentation" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-      <div class="video-config">
-        <input id="videoUrlInputHour2Part2" type="text" placeholder="動画URL、またはYouTubeの埋め込みiframeタグを貼り付け（教員設定用）">
-        <button id="videoSetBtnHour2Part2">動画をセット</button>
+      <div class="video-header">
+        <span>🎬</span> 2時間目その２ 解説動画（本番捜査：ルーレット事件簿 産業編）
       </div>
-      <p id="videoErrorHour2Part2" class="video-error hidden"></p>
+      <iframe id="videoFrameHour2Part2" src="https://www.youtube.com/embed/brULJ-tPKTE" title="解説動画（2時間目その２）" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
     </div>
 
     <h3>捜査ツール</h3>
@@ -645,10 +615,26 @@
 
   <!-- ==================== その他タブ ==================== -->
   <section id="other" class="panel">
-    <h2>その他：ツール集 ＆ 生成AI活用ガイド</h2>
+    <h2>その他：クラス編成・座席表 ＆ 教材リンク</h2>
 
-    <h3>捜査・批評ツール</h3>
+    <h3>教員用・クラス編成・座席表</h3>
     <div class="link-card-grid">
+      <a class="link-card" href="supervisor_guide.html" target="_blank" style="border-color: #059669; background: #ecfdf5; color: #065f46;">
+        <span class="icon">📖</span>
+        <span>【教員用】授業監督の手引き・セリフ集（A4印刷対応）</span>
+      </a>
+      <a class="link-card" href="shuffle_groups.html" target="_blank">
+        <span class="icon">👥</span>
+        <span>シャッフル座席表・移動先一覧を開く（Web版）</span>
+      </a>
+    </div>
+
+    <h3>教材・資材リンク</h3>
+    <div class="link-card-grid">
+      <a class="link-card" href="loilo-cards.html" target="_blank">
+        <span class="icon">📋</span>
+        <span>ロイロ共有ノート用カード一覧・印刷（HTMLプレビュー）</span>
+      </a>
       <a class="link-card" href="roulette.html" target="_blank">
         <span class="icon">🎯</span>
         <span>RESAS探偵ルーレットを開く</span>
@@ -682,90 +668,6 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
-// 動画URL抽出・埋め込み変換
-function extractUrlFromInput(raw){
-  if (!raw) return '';
-  const iframeMatch = raw.match(/<iframe[^>]*\ssrc=["']([^"']+)["']/i);
-  return iframeMatch ? iframeMatch[1] : raw;
-}
-
-function toEmbeddableUrl(rawUrl){
-  if (!rawUrl) return null;
-  let url;
-  try {
-    url = new URL(rawUrl);
-  } catch (e) {
-    return null;
-  }
-  if (url.protocol !== 'https:') return null;
-
-  const host = url.hostname.replace(/^www\./, '');
-  if (host === 'youtu.be') {
-    const id = url.pathname.slice(1).split(/[?#]/)[0];
-    return id ? `https://www.youtube.com/embed/${id}` : null;
-  }
-  if (host === 'youtube.com' || host === 'm.youtube.com') {
-    if (url.pathname === '/watch') {
-      const id = url.searchParams.get('v');
-      return id ? `https://www.youtube.com/embed/${id}` : null;
-    }
-    if (url.pathname.startsWith('/embed/')) {
-      return url.toString();
-    }
-    if (url.pathname.startsWith('/shorts/')) {
-      const id = url.pathname.split('/')[2];
-      return id ? `https://www.youtube.com/embed/${id}` : null;
-    }
-  }
-  return url.toString();
-}
-
-// 動画枠のセットアップ
-function setupVideoSlot(frameId, inputId, buttonId, errorId, storageKey, legacyKey){
-  const frame = document.getElementById(frameId);
-  const input = document.getElementById(inputId);
-  const errorEl = document.getElementById(errorId);
-
-  document.getElementById(buttonId).addEventListener('click', () => {
-    const raw = extractUrlFromInput(input.value.trim());
-    const embeddable = toEmbeddableUrl(raw);
-    if (embeddable) {
-      frame.src = embeddable;
-      try {
-        localStorage.setItem(storageKey, embeddable);
-      } catch (e) {
-        // localStorage無効環境でも動作継続
-      }
-      errorEl.textContent = '';
-      errorEl.classList.add('hidden');
-    } else {
-      errorEl.textContent = '有効なURLを読み取れませんでした。https:// から始まる動画URL、またはYouTubeの埋め込みiframeタグを入力してください。';
-      errorEl.classList.remove('hidden');
-    }
-  });
-
-  // 保存値の復元
-  let saved = null;
-  try {
-    saved = localStorage.getItem(storageKey);
-    if (!saved && legacyKey) {
-      saved = localStorage.getItem(legacyKey);
-    }
-  } catch (e) {
-    saved = null;
-  }
-  if (saved) {
-    const validSaved = toEmbeddableUrl(saved);
-    if (validSaved) {
-      frame.src = validSaved;
-      input.value = validSaved;
-    }
-  }
-}
-
-setupVideoSlot('videoFrame', 'videoUrlInput', 'videoSetBtn', 'videoError', 'resasDetectiveVideoUrl');
-setupVideoSlot('videoFrameHour2Part1', 'videoUrlInputHour2Part1', 'videoSetBtnHour2Part1', 'videoErrorHour2Part1', 'resasDetectiveVideoUrlHour2Part1');
-setupVideoSlot('videoFrameHour2Part2', 'videoUrlInputHour2Part2', 'videoSetBtnHour2Part2', 'videoErrorHour2Part2', 'resasDetectiveVideoUrlHour2Part2', 'resasDetectiveVideoUrlHour2');
 
 // クリップボードコピー
 document.querySelectorAll('.copy-btn').forEach(btn => {
